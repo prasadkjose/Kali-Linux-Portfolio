@@ -24,7 +24,11 @@
         <img src="https://img.shields.io/github/forks/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Forks" />
     </a>
 </p>
-
+<p align="center">
+    <a href="https://jihedkdiss.tn">
+        <img src="https://img.shields.io/badge/View%20Live%20Demo-jihedkdiss.tn-17BB98?style=for-the-badge&logo=google-chrome" alt="Forks" />
+    </a>
+</p>
 <p align="center">
     <b>A sleek, hacker-inspired portfolio website themed after Kali Linux.<br></b>
     Built with React & TypeScript, simulating Kali Linux desktop environment to showcase projects, resume, and contact info.
@@ -84,3 +88,4 @@ Made with ❤️ by [Jihed Kdiss](https://github.com/jihedkdiss)
 [![Website](https://img.shields.io/badge/Website-jihedkdiss.tn-17BB98?style=for-the-badge)](https://jihedkdiss.tn)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jihedkdiss)
 [![X / Twitter](https://img.shields.io/badge/X-%231DA1F2?style=for-the-badge&logo=x&logoColor=white)](https://x.com/0xjio_)
+<img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fjihedkdiss%2FKali-Linux-Hacker-Portfolio&label=Visitors&countColor=%23dce775" alt="Visitors" />
