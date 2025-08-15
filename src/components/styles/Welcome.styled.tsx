@@ -17,7 +17,6 @@ export const HeroContainer = styled.div`
 
 export const PreName = styled.pre`
   margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
 
   @media (max-width: 550px) {
     display: none;
@@ -50,6 +49,11 @@ export const Seperator = styled.div`
 
 export const Cmd = styled.span`
   color: ${({ theme }) => theme.colors?.primary};
+
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
 `;
 
 export const Link = styled.a`

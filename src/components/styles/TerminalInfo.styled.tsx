@@ -6,9 +6,11 @@ export const Wrapper = styled.span`
 `;
 
 export const WebsiteName = styled.span`
-  color: ${({ theme }) => theme.colors?.primary};
+  /* Kali prompt: red user@host */
+  color: #FF6B6B;
 `;
 
 export const User = styled.span`
-  color: ${({ theme }) => theme.colors?.secondary};
+  /* Kali prompt: red user@host */
+  color: #FF6B6B;
 `;

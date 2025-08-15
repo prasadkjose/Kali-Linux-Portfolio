@@ -17,6 +17,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-icons:
+        specifier: ^4.12.0
+        version: 4.12.0(react@18.2.0)
       styled-components:
         specifier: ^5.3.10
         version: 5.3.10(react-dom@18.2.0(react@18.2.0))(react-is@18.2.0)(react@18.2.0)
@@ -2668,6 +2671,11 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
+  react-icons@4.12.0:
+    resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
+    peerDependencies:
+      react: '*'
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -2869,6 +2877,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   sourcemap-codec@1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
@@ -5222,7 +5231,7 @@ snapshots:
       debug: 4.3.4(supports-color@5.5.0)
       enhanced-resolve: 5.14.0
       eslint: 8.40.0
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-plugin-import@2.27.5)(eslint@8.40.0))(eslint@8.40.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.40.0)
       eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-typescript@3.5.5)(eslint@8.40.0)
       get-tsconfig: 4.5.0
       globby: 13.1.4
@@ -5235,7 +5244,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-plugin-import@2.27.5)(eslint@8.40.0))(eslint@8.40.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.40.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -5255,7 +5264,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.40.0
       eslint-import-resolver-node: 0.3.7
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-plugin-import@2.27.5)(eslint@8.40.0))(eslint@8.40.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.6(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.40.0)
       has: 1.0.3
       is-core-module: 2.12.1
       is-glob: 4.0.3
@@ -6292,6 +6301,10 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+
+  react-icons@4.12.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
 
   react-is@16.13.1: {}
 

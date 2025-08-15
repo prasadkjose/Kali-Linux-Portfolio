@@ -11,6 +11,11 @@ export const CmdList = styled.div`
 
 export const Cmd = styled.span`
   color: ${({ theme }) => theme.colors?.primary};
+
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
 `;
 
 export const CmdDesc = styled.span`

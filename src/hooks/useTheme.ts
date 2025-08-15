@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import themes from "../components/styles/themes";
-import { setToLS, getFromLS } from "../utils/storage";
 import { DefaultTheme } from "styled-components";
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<DefaultTheme>(themes.dark);
+  // Kali-only theme
+  const [theme, setTheme] = useState<DefaultTheme>(themes.kali);
   const [themeLoaded, setThemeLoaded] = useState(false);
 
-  const setMode = (mode: DefaultTheme) => {
-    setToLS("tsn-theme", mode.name);
-    setTheme(mode);
+  const setMode = (_mode: DefaultTheme) => {
+    // No-op: theme switching disabled in Kali-only mode
+    setTheme(themes.kali);
   };
 
   useEffect(() => {
-    const localThemeName = getFromLS("tsn-theme");
-    localThemeName ? setTheme(themes[localThemeName]) : setTheme(themes.dark);
+    // Immediately mark as loaded with Kali theme
+    setTheme(themes.kali);
     setThemeLoaded(true);
   }, []);
 

@@ -27,20 +27,28 @@ type Command = {
 }[];
 
 export const commands: Command = [
-  { cmd: "about", desc: "about Sat Naing", tab: 8 },
+  { cmd: "about", desc: "about Jihed Kdiss", tab: 8 },
   { cmd: "clear", desc: "clear the terminal", tab: 8 },
   { cmd: "echo", desc: "print out anything", tab: 9 },
   { cmd: "education", desc: "my education background", tab: 4 },
-  { cmd: "email", desc: "send an email to me", tab: 8 },
-  { cmd: "gui", desc: "go to my portfolio in GUI", tab: 10 },
+  { cmd: "email", desc: "send me an email", tab: 8 },
+  { cmd: "resume", desc: "go to my resume", tab: 7 },
   { cmd: "help", desc: "check available commands", tab: 9 },
   { cmd: "history", desc: "view command history", tab: 6 },
   { cmd: "projects", desc: "view projects that I've coded", tab: 5 },
   { cmd: "pwd", desc: "print current working directory", tab: 10 },
   { cmd: "socials", desc: "check out my social accounts", tab: 6 },
-  { cmd: "themes", desc: "check available themes", tab: 7 },
+
   { cmd: "welcome", desc: "display hero section", tab: 6 },
   { cmd: "whoami", desc: "about current user", tab: 7 },
+];
+
+// Hidden easter-egg commands (not listed in help)
+export const hiddenCommands = [
+  "sudo",
+  "neofetch",
+  "uname",
+  "ls",
 ];
 
 type Term = {
@@ -49,6 +57,7 @@ type Term = {
   rerender: boolean;
   index: number;
   clearHistory?: () => void;
+  executeCommand?: (cmd: string) => void;
 };
 
 export const termContext = createContext<Term>({
@@ -63,10 +72,12 @@ const Terminal = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [inputVal, setInputVal] = useState("");
-  const [cmdHistory, setCmdHistory] = useState<string[]>(["welcome"]);
+  // Start with 'welcome' so it executes first on load
+  const [cmdHistory, setCmdHistory] = useState<string[]>(["welcome", "about"]);
   const [rerender, setRerender] = useState(false);
   const [hints, setHints] = useState<string[]>([]);
-  const [pointer, setPointer] = useState(-1);
+  // History navigation index: null means not navigating; otherwise index into cmdHistory (oldest -> newest)
+  const [histIndex, setHistIndex] = useState<number | null>(null);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,16 +89,23 @@ const Terminal = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCmdHistory([inputVal, ...cmdHistory]);
+    setCmdHistory([...cmdHistory, inputVal]);
     setInputVal("");
     setRerender(true);
     setHints([]);
-    setPointer(-1);
+    setHistIndex(null);
   };
 
   const clearHistory = () => {
     setCmdHistory([]);
     setHints([]);
+  };
+
+  const executeCommand = (cmd: string) => {
+    setCmdHistory([...cmdHistory, cmd]);
+    setRerender(true);
+    setHints([]);
+    setHistIndex(null);
   };
 
   // focus on input when terminal is clicked
@@ -146,27 +164,27 @@ const Terminal = () => {
 
     // Go previous cmd
     if (e.key === "ArrowUp") {
-      if (pointer >= cmdHistory.length) return;
+      if (cmdHistory.length === 0) return;
 
-      if (pointer + 1 === cmdHistory.length) return;
-
-      setInputVal(cmdHistory[pointer + 1]);
-      setPointer(prevState => prevState + 1);
+      const nextIndex = histIndex === null ? cmdHistory.length - 1 : Math.max(0, histIndex - 1);
+      setHistIndex(nextIndex);
+      setInputVal(cmdHistory[nextIndex]);
       inputRef?.current?.blur();
     }
 
     // Go next cmd
     if (e.key === "ArrowDown") {
-      if (pointer < 0) return;
+      if (histIndex === null) return;
 
-      if (pointer === 0) {
+      if (histIndex === cmdHistory.length - 1) {
         setInputVal("");
-        setPointer(-1);
+        setHistIndex(null);
         return;
       }
 
-      setInputVal(cmdHistory[pointer - 1]);
-      setPointer(prevState => prevState - 1);
+      const nextIndex = Math.min(cmdHistory.length - 1, histIndex + 1);
+      setHistIndex(nextIndex);
+      setInputVal(cmdHistory[nextIndex]);
       inputRef?.current?.blur();
     }
   };
@@ -177,10 +195,52 @@ const Terminal = () => {
       inputRef?.current?.focus();
     }, 1);
     return () => clearTimeout(timer);
-  }, [inputRef, inputVal, pointer]);
+  }, [inputRef, inputVal, histIndex]);
+
+  // Auto-scroll to bottom when history updates or new output renders
+  useEffect(() => {
+    const el = containerRef?.current as unknown as HTMLElement | null;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [cmdHistory, rerender]);
 
   return (
     <Wrapper data-testid="terminal-wrapper" ref={containerRef}>
+      {cmdHistory.map((cmdH, index) => {
+        const commandArray = _.split(_.trim(cmdH), " ");
+        const validCommand = _.find(commands, { cmd: commandArray[0] });
+        const contextValue = {
+          arg: _.drop(commandArray),
+          history: cmdHistory,
+          rerender,
+          index,
+          clearHistory,
+          executeCommand,
+        };
+        return (
+          <div key={_.uniqueId(`${cmdH}_`)}>
+            <div>
+              <TermInfo />
+              <MobileBr />
+              <MobileSpan>&#62;</MobileSpan>
+              <span data-testid="input-command">{cmdH}</span>
+            </div>
+            {(validCommand || hiddenCommands.includes(commandArray[0])) ? (
+              <termContext.Provider value={contextValue}>
+                <Output index={index} cmd={commandArray[0]} />
+              </termContext.Provider>
+            ) : cmdH === "" ? (
+              <Empty />
+            ) : (
+              <CmdNotFound data-testid={`not-found-${index}`}>
+                command not found: {cmdH}
+              </CmdNotFound>
+            )}
+          </div>
+        );
+      })}
+
       {hints.length > 1 && (
         <div>
           {hints.map(hCmd => (
@@ -188,6 +248,7 @@ const Terminal = () => {
           ))}
         </div>
       )}
+
       <Form onSubmit={handleSubmit}>
         <label htmlFor="terminal-input">
           <TermInfo /> <MobileBr />
@@ -207,39 +268,6 @@ const Terminal = () => {
           onChange={handleChange}
         />
       </Form>
-
-      {cmdHistory.map((cmdH, index) => {
-        const commandArray = _.split(_.trim(cmdH), " ");
-        const validCommand = _.find(commands, { cmd: commandArray[0] });
-        const contextValue = {
-          arg: _.drop(commandArray),
-          history: cmdHistory,
-          rerender,
-          index,
-          clearHistory,
-        };
-        return (
-          <div key={_.uniqueId(`${cmdH}_`)}>
-            <div>
-              <TermInfo />
-              <MobileBr />
-              <MobileSpan>&#62;</MobileSpan>
-              <span data-testid="input-command">{cmdH}</span>
-            </div>
-            {validCommand ? (
-              <termContext.Provider value={contextValue}>
-                <Output index={index} cmd={commandArray[0]} />
-              </termContext.Provider>
-            ) : cmdH === "" ? (
-              <Empty />
-            ) : (
-              <CmdNotFound data-testid={`not-found-${index}`}>
-                command not found: {cmdH}
-              </CmdNotFound>
-            )}
-          </div>
-        );
-      })}
     </Wrapper>
   );
 };

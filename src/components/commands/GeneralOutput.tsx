@@ -1,7 +1,7 @@
 import { Wrapper } from "../styles/Output.styled";
 
 type Props = {
-  children: string;
+  children: React.ReactNode;
 };
 
 const GeneralOutput: React.FC<Props> = ({ children }) => (

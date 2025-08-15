@@ -11,7 +11,7 @@ import { termContext } from "../Terminal";
 import Usage from "../Usage";
 
 const Socials: React.FC = () => {
-  const { arg, history, rerender } = useContext(termContext);
+  const { arg, history, rerender, executeCommand } = useContext(termContext);
 
   /* ===== get current command ===== */
   const currentCommand = getCurrentCmdArry(history);
@@ -24,6 +24,11 @@ const Socials: React.FC = () => {
       });
     }
   }, [arg, rerender, currentCommand]);
+
+  /* ===== handle social link click ===== */
+  const handleSocialClick = (url: string) => {
+    window.open(url, "_blank");
+  };
 
   /* ===== check arg is valid ===== */
   const checkArg = () =>
@@ -38,7 +43,12 @@ const Socials: React.FC = () => {
       <ProjectsIntro>Here are my social links</ProjectsIntro>
       {socials.map(({ id, title, url, tab }) => (
         <CmdList key={title}>
-          <Cmd>{`${id}. ${title}`}</Cmd>
+          <Cmd
+            onClick={() => handleSocialClick(url)}
+            style={{ cursor: 'pointer' }}
+          >
+            {`${id}. ${title}`}
+          </Cmd>
           {generateTabs(tab)}
           <CmdDesc>- {url}</CmdDesc>
         </CmdList>
@@ -52,26 +62,26 @@ const socials = [
   {
     id: 1,
     title: "GitHub",
-    url: "https://github.com/satnaing",
+    url: "https://github.com/jihedkdiss",
     tab: 3,
   },
   {
     id: 2,
-    title: "Dev.to",
-    url: "https://dev.to/satnaing",
-    tab: 3,
+    title: "Facebook",
+    url: "https://www.facebook.com/jiokdiss",
+    tab: 1,
   },
   {
     id: 3,
-    title: "Facebook",
-    url: "https://www.facebook.com/satnaing.dev",
+    title: "Linkedin",
+    url: "https://linkedin.com/in/jihedkdiss",
     tab: 1,
   },
   {
     id: 4,
-    title: "Instagram",
-    url: "https://instagram.com/satnaing.dev",
-    tab: 0,
+    title: "Blog",
+    url: "https://dev.to/jihedkdiss",
+    tab: 5,
   },
 ];
 

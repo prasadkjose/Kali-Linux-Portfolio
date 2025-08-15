@@ -62,17 +62,14 @@ export const checkRedirect = (
  * @param {string[]} themes - the command of the function
  * @returns {boolean} redirect - true | false
  */
+/**
+ * Theme switching is disabled in Kali-only mode
+ */
 export const checkThemeSwitch = (
   rerender: boolean,
   currentCommand: string[],
   themes: string[]
-): boolean =>
-  rerender && // is submitted
-  currentCommand[0] === "themes" && // current command starts with 'themes'
-  currentCommand[1] === "set" && // first arg is 'set'
-  currentCommand.length > 1 && // current command has arg
-  currentCommand.length < 4 && // if num of arg is valid (not `themes set light sth`)
-  _.includes(themes, currentCommand[2]); // arg last part is one of id
+): boolean => false;
 
 /**
  * Perform advanced tab actions
@@ -88,40 +85,10 @@ export const argTab = (
   setHints: (value: React.SetStateAction<string[]>) => void,
   hintsCmds: string[]
 ): string[] | undefined => {
-  // 1) if input is 'themes '
-  if (inputVal === "themes ") {
-    setInputVal(`themes set`);
-    return [];
-  }
-
-  // 2) if input is 'themes s'
-  else if (
-    _.startsWith("themes", _.split(inputVal, " ")[0]) &&
-    _.split(inputVal, " ")[1] !== "set" &&
-    _.startsWith("set", _.split(inputVal, " ")[1])
-  ) {
-    setInputVal(`themes set`);
-    return [];
-  }
-
-  // 3) if input is 'themes set '
-  else if (inputVal === "themes set ") {
-    setHints(_.keys(theme));
-    return [];
-  }
-
-  // 4) if input starts with 'themes set ' + theme
-  else if (_.startsWith(inputVal, "themes set ")) {
-    _.keys(theme).forEach(t => {
-      if (_.startsWith(t, _.split(inputVal, " ")[2])) {
-        hintsCmds = [...hintsCmds, t];
-      }
-    });
-    return hintsCmds;
-  }
+  // Themes autocompletion disabled (Kali-only)
 
   // 5) if input is 'projects' or 'socials'
-  else if (inputVal === "projects " || inputVal === "socials ") {
+  if (inputVal === "projects " || inputVal === "socials ") {
     setInputVal(`${inputVal}go`);
     return [];
   }
@@ -134,7 +101,7 @@ export const argTab = (
 
   // 7) if input is 'socials go '
   else if (_.startsWith(inputVal, "socials go ")) {
-    ["1.Github", "2.Dev.to", "3.Facebook", "4.Instagram"].forEach(t => {
+    ["1.Github", "2.Facebook", "3.Linkedin"].forEach(t => {
       hintsCmds = [...hintsCmds, t];
     });
     return hintsCmds;
@@ -143,10 +110,10 @@ export const argTab = (
   // 8) if input is 'projects go '
   else if (_.startsWith(inputVal, "projects go ")) {
     [
-      "1.Sat Naing's Blog",
-      "2.Haru Fashion",
-      "3.Haru API",
-      "4.AstroPaper Blog Theme",
+      "1.Blog",
+      "2.Radio Medenine Website",
+      "3.Deagle",
+      "4.Writeups",
     ].forEach(t => {
       hintsCmds = [...hintsCmds, t];
     });

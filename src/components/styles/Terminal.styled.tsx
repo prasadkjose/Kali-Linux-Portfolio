@@ -1,13 +1,45 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 0;
+
   padding: 1.25rem;
   padding-top: 0.75rem;
 
   display: flex;
-  flex-direction: column-reverse;
-  max-height: calc(100vh - 2rem);
+  flex-direction: column;
+  height: 100%;
   overflow-y: auto;
+  overscroll-behavior: contain;
+
+  /* Prettier, modern scrollbar for the terminal */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: ${({ theme }) => theme.colors?.scrollHandle} transparent; /* Firefox */
+
+  &::-webkit-scrollbar { width: 12px; }
+  &::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.28));
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, ${({ theme }) => theme.colors?.scrollHandle}, ${({ theme }) => theme.colors?.scrollHandleHover});
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, ${({ theme }) => theme.colors?.scrollHandleHover}, ${({ theme }) => theme.colors?.scrollHandleHover});
+    border-color: transparent;
+  }
+  &::-webkit-scrollbar-corner { background: transparent; }
+
+  ${({ theme }) => theme.backgroundImage && `
+    /* Let the window frame provide the glass backdrop; keep inner terminal transparent */
+    background-color: transparent;
+  `}
 `;
 
 export const CmdNotFound = styled.div`

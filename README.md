@@ -1,96 +1,86 @@
-# Terminal Portfolio Website by Sat Naing
+<h1 align="center">Kali Linux Terminal Portfolio 🐦‍🔥</h1>
 
-![Terminal Portfolio Website by Sat Naing](https://user-images.githubusercontent.com/53733092/194220661-e2ff8b4c-f64a-4b64-a836-c52fae6bbcda.png)
+<p align="center">
+    <img src="public/og.png" alt="Kali Linux Terminal Portfolio screenshot" width="600" />
+</p>
 
-![ts](https://badgen.net/badge/Built%20With/TypeScript/blue?style=flat-square)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/81fdb91d-c06f-46c2-b18d-dfc6f090f281/deploy-status)](https://app.netlify.com/sites/terminal-sn/deploys)
-![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)
+<p align="center">
+    <a href="https://app.netlify.com/projects/jihedkdiss/deploys">
+        <img src="https://api.netlify.com/api/v1/badges/9818157c-d810-4ad6-b218-038707143a3c/deploy-status?style=flat-square" alt="Netlify Status" />
+    </a>
+    <a href="LICENSE">
+        <img src="https://img.shields.io/github/license/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="License" />
+    </a>
+    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio">
+        <img src="https://img.shields.io/github/repo-size/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Repo size" />
+    </a>
+    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio">
+        <img src="https://img.shields.io/github/languages/top/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Top language" />
+    </a>
+    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio/stargazers">
+        <img src="https://img.shields.io/github/stars/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square&color=ffcc00" alt="Stars" />
+    </a>
+    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio/network">
+        <img src="https://img.shields.io/github/forks/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Forks" />
+    </a>
+</p>
 
-My perfolio website in terminal version developed with React, TypeScript and Styled-Components. Multiple themes supported and keyboard shortcuts can be used for some functionalities.
+<p align="center">
+    <b>A sleek, hacker-inspired portfolio website themed after Kali Linux.<br></b>
+    Built with React & TypeScript, simulating Kali Linux desktop environment to showcase projects, resume, and contact info.
+</p>
 
-Blog Post: https://satnaing.dev/blog/posts/how-do-i-develop-my-terminal-portfolio-website-with-react
+## Table of contents
 
-## Demo
-
-<a href="https://www.jinno.app/redirect?from=satnaing&redirect=libary&libName=terminal-portfolio&componentName=App&libCreator=satnaing" target="_blank" rel="noopener noreferrer">Demo - try it in your editor</a>
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Run locally](#run-locally)
+- [Contributing](#contributing)
+- [Author](#license--author)
 
 ## Features
 
-- Responsive Design 📱💻
-- Multiple themes 🎨
-- Autocomplete feature ✨ (TAB | Ctrl + i)
-- Go previous and next command ⬆️⬇️
-- View command history 📖
-- PWA and Offline Support 🔥
-- Well-tested ✅
+- Responsive, terminal-style portfolio UI
+- Kali Linux color theme and visuals
+- Autocomplete (TAB / Ctrl+i)
+- Command history navigation (Up / Down)
+- Built-in commands: about, help, projects, resume, socials, email, education, etc.
+- Keyboard-first experience (type commands, open windows, toggle fullscreen)
 
-## Tech Stack
+## Tech stack [![TypeScript](https://img.shields.io/badge/TypeScript-3.9%2B-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-17%2B-%2361DAFB?style=flat-square&logo=react&logoColor=white)](https://reactjs.org/) [![Vite](https://img.shields.io/badge/Vite-%40vitejs-%23646cff?style=flat-square&logo=vite)](https://vitejs.dev/)
 
-**Frontend** - [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/)  
-**Styling** - [Styled-Components](https://styled-components.com/)  
-**UI/UX** - [Figma](https://figma.com/)  
-**State Management** - [ContextAPI](https://reactjs.org/docs/context.html)  
-**Testing** - [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/)  
-**Deployment** - [Netlify](https://app.netlify.com/)
+- TypeScript
+- React + Vite
+- Styled Components (for styling)
+- Netlify (hosting)
 
-## Multiple Themes
+## Run locally
 
-<a href="https://www.jinno.app/redirect?from=satnaing&redirect=libary&libName=terminal-portfolio&componentName=App&libCreator=satnaing" target="_blank" rel="noopener noreferrer">Demo - Dark theme</a><br/>
-<a href="https://www.jinno.app/redirect?from=satnaing&redirect=libary&libName=terminal-portfolio&componentName=AppLight&libCreator=satnaing" target="_blank" rel="noopener noreferrer">Demo - light theme</a><br/>
-<a href="https://www.jinno.app/redirect?from=satnaing&redirect=libary&libName=terminal-portfolio&componentName=AppBlue&libCreator=satnaing" target="_blank" rel="noopener noreferrer">Demo - blue-matrix theme</a><br/>
-<a href="https://www.jinno.app/redirect?from=satnaing&redirect=libary&libName=terminal-portfolio&componentName=AppEspresso&libCreator=satnaing" target="_blank" rel="noopener noreferrer">Demo - espresso theme</a><br/>
-<a href="https://www.jinno.app/redirect?from=satnaing&redirect=libary&libName=terminal-portfolio&componentName=AppGreen&libCreator=satnaing" target="_blank" rel="noopener noreferrer">Demo - green-goblin theme</a><br/>
-<a href="https://www.jinno.app/redirect?from=satnaing&redirect=libary&libName=terminal-portfolio&componentName=AppUbuntu&libCreator=satnaing" target="_blank" rel="noopener noreferrer">Demo - ubuntu theme</a><br/>
-
-Currently, this website supports 6 themes. Type `themes` in the terminal for more info.
-![terminal-portfolio-themes](https://user-images.githubusercontent.com/53733092/194221801-94f1c28b-4865-4b7f-a73e-d41132519bea.png)
-
-## Lighthouse Score
-
-<p align="center">
-<img width="710" alt="Sat Naing Terminal Lighthouse Score" src="public/lighthouse-result.svg">
-</p>
-
-## Running Locally
-
-Clone the project
+Clone the project and install dependencies:
 
 ```bash
-git clone https://github.com/satnaing/terminal-portfolio.git
-```
-
-Go to the project directory
-
-```bash
-cd terminal-portfolio
-```
-
-Remove remote origin
-
-```bash
+git clone https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio.git
+cd Kali-Linux-Hacker-Portfolio
 git remote remove origin
+pnpm install
+pnpm dev
 ```
 
-Install dependencies
+> The repo uses pnpm in the workspace; `npm install` also works but `pnpm` is recommended for speed and deterministic installs.
 
-```bash
-npm install
-```
+## Contributing
 
-Start the server
+Contributions are welcome. If you'd like to contribute:
 
-```bash
-npm run dev
-```
-
-## Inspiration and Credits
-
-Here are some inspiration for this kind of terminal website. Only some features and functionalities are inspired by these following websites. All codes are written on my own.
-
-- I built this repository using [Jinno](https://www.jinno.app/redirect?from=satnaing&redirect=vs)
-- [term m4tt72](https://term.m4tt72.com/)
-- [Forrest](https://fkcodes.com/)
+1. Fork the repo
+2. Create a feature branch
+3. Open a PR describing your change
 
 ## Author
 
-- [@satnaing](https://satnaing.dev)
+Made with ❤️ by [Jihed Kdiss](https://github.com/jihedkdiss)
+
+<!-- Social / contact badges -->
+[![Website](https://img.shields.io/badge/Website-jihedkdiss.tn-17BB98?style=for-the-badge)](https://jihedkdiss.tn)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jihedkdiss)
+[![X / Twitter](https://img.shields.io/badge/X-%231DA1F2?style=for-the-badge&logo=x&logoColor=white)](https://x.com/0xjio_)
