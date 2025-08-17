@@ -1,32 +1,20 @@
-<h1 align="center">Kali Linux Terminal Portfolio 🐦‍🔥</h1>
+<h1 align="center">Kali Linux Hacker Portfolio 🐦‍🔥</h1>
 
 <p align="center">
     <img src="public/og.png" alt="Kali Linux Terminal Portfolio screenshot" width="600" />
 </p>
 
 <p align="center">
-    <a href="https://app.netlify.com/projects/jihedkdiss/deploys">
-        <img src="https://api.netlify.com/api/v1/badges/9818157c-d810-4ad6-b218-038707143a3c/deploy-status?style=flat-square" alt="Netlify Status" />
-    </a>
-    <a href="LICENSE">
-        <img src="https://img.shields.io/github/license/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="License" />
-    </a>
-    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio">
-        <img src="https://img.shields.io/github/repo-size/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Repo size" />
-    </a>
-    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio">
-        <img src="https://img.shields.io/github/languages/top/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Top language" />
-    </a>
-    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio/stargazers">
-        <img src="https://img.shields.io/github/stars/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square&color=ffcc00" alt="Stars" />
-    </a>
-    <a href="https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio/network">
-        <img src="https://img.shields.io/github/forks/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Forks" />
-    </a>
+    <img src="https://api.netlify.com/api/v1/badges/9818157c-d810-4ad6-b218-038707143a3c/deploy-status?style=flat-square" alt="Netlify Status" />
+    <img src="https://img.shields.io/github/license/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="License" />
+    <img src="https://img.shields.io/github/repo-size/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Repo size" />
+    <img src="https://img.shields.io/github/languages/top/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Top language" />
+    <img src="https://img.shields.io/github/stars/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square&color=ffcc00" alt="Stars" />
+    <img src="https://img.shields.io/github/forks/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Forks" />
 </p>
 <p align="center">
     <a href="https://jihedkdiss.tn">
-        <img src="https://img.shields.io/badge/View%20Live%20Demo-jihedkdiss.tn-17BB98?style=for-the-badge&logo=google-chrome" alt="Forks" />
+        <img src="https://img.shields.io/badge/View%20Live%20Demo-jihedkdiss.tn-17BB98?style=for-the-badge" alt="Forks" />
     </a>
 </p>
 <p align="center">
@@ -82,9 +70,6 @@ Contributions are welcome. If you'd like to contribute:
 
 ## Author
 
-Made with ❤️ by [Jihed Kdiss](https://github.com/jihedkdiss)
-
-<!-- Social / contact badges -->
 [![Website](https://img.shields.io/badge/Website-jihedkdiss.tn-17BB98?style=for-the-badge)](https://jihedkdiss.tn)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jihedkdiss)
 [![X / Twitter](https://img.shields.io/badge/X-%231DA1F2?style=for-the-badge&logo=x&logoColor=white)](https://x.com/0xjio_)
