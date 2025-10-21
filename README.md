@@ -24,11 +24,13 @@
 
 ## Table of contents
 
+- [Table of contents](#table-of-contents)
 - [Features](#features)
-- [Tech stack](#tech-stack)
+- [Tech stack   ](#tech-stack---)
 - [Run locally](#run-locally)
+  - [If you are using Docker](#if-you-are-using-docker)
 - [Contributing](#contributing)
-- [Author](#license--author)
+- [Author](#author)
 
 ## Features
 
@@ -59,6 +61,13 @@ pnpm dev
 ```
 
 > The repo uses pnpm in the workspace; `npm install` also works but `pnpm` is recommended for speed and deterministic installs.
+
+### If you are using Docker
+
+```bash
+docker build -t site .
+docker run -p 127.0.0.1:3000:3000 site
+```
 
 ## Contributing
 
