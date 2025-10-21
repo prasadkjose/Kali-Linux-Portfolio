@@ -1,9 +1,9 @@
 {
-  "name": "jihedkdiss-portfolio",
+  "name": "kali_site",
   "private": true,
-  "version": "1.3.1",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vite --port 8000",
+    "dev": "vite --port 3000",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test:once": "vitest run --passWithNoTests",
