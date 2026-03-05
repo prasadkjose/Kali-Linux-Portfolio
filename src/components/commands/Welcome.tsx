@@ -2,12 +2,9 @@ import { useContext } from "react";
 import {
   Cmd,
   HeroContainer,
-  Link,
-  PreImg,
   PreName,
   PreNameMobile,
   PreWrapper,
-  Seperator,
 } from "../styles/Welcome.styled";
 import { termContext } from "../Terminal";
 

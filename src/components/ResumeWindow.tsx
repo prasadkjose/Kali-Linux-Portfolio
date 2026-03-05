@@ -187,7 +187,7 @@ const ResumeWindow: React.FC<Props> = ({ onClose, onMinimize, isMaximized=false,
     window.addEventListener('mouseup', onMouseUp);
   };
 
-  const pdfUrl = "/Jihed_Kdiss_Resume.pdf"; // Ensure this file exists in public root
+  const pdfUrl = "/Prasad Resume - SDE.pdf"; // Ensure this file exists in public root
 
   return (
     <Frame x={x} y={y} width={width} height={height} maximized={isMaximized} hidden={!visible} isTransforming={!dragging.current && !resizing.current} zIndex={zIndex}>

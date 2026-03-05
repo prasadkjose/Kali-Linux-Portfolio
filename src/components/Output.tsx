@@ -11,7 +11,7 @@ import History from "./commands/History";
 import Projects from "./commands/Projects";
 import Socials from "./commands/Socials";
 import { OutputContainer, UsageDiv } from "./styles/Output.styled";
-import { hiddenCommands, termContext } from "./Terminal";
+import { termContext } from "./Terminal";
 import { useContext } from "react";
 
 type Props = {
@@ -75,7 +75,7 @@ const Output: React.FC<Props> = ({ index, cmd }) => {
           help: <Help />,
           history: <History />,
           projects: <Projects />,
-          pwd: <GeneralOutput>/home/jihedkdiss</GeneralOutput>,
+          pwd: <GeneralOutput>/home/prasadkjose</GeneralOutput>,
           socials: <Socials />,
           welcome: <Welcome />,
           whoami: <GeneralOutput>kali</GeneralOutput>,

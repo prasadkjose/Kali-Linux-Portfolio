@@ -53,8 +53,8 @@
 Clone the project and install dependencies:
 
 ```bash
-git clone https://github.com/jihedkdiss/Kali-Linux-Hacker-Portfolio.git
-cd Kali-Linux-Hacker-Portfolio
+git clone https://github.com/prasadkjose/Kali-Linux-Portfolio.git
+cd Kali-Linux-Portfolio
 git remote remove origin
 pnpm install
 pnpm dev
@@ -80,6 +80,5 @@ Contributions are welcome. If you'd like to contribute:
 ## Author
 
 [![Website](https://img.shields.io/badge/Website-jihedkdiss.tn-17BB98?style=for-the-badge)](https://jihedkdiss.tn)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jihedkdiss)
-[![X / Twitter](https://img.shields.io/badge/X-%231DA1F2?style=for-the-badge&logo=x&logoColor=white)](https://x.com/0xjio_)
-<img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fjihedkdiss%2FKali-Linux-Hacker-Portfolio&label=Visitors&countColor=%23dce775" alt="Visitors" />
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/prasadkjose)
+[![X / Twitter](https://img.shields.io/badge/X-%231DA1F2?style=for-the-badge&logo=x&logoColor=white)](https://x.com/prasadkjose)

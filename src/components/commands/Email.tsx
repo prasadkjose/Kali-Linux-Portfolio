@@ -10,11 +10,11 @@ const Email: React.FC = () => {
   const currentCommand = _.split(history[0], " ");
 
   if (rerender && currentCommand[0] === "email" && currentCommand.length <= 1) {
-    window.open("mailto:" + "contact@jihedkdiss.tn", "_self");
+    window.open("mailto:" + "prasadkjose@gmail.com", "_self");
   }
 
   const handleEmailClick = () => {
-    window.open("mailto:" + "contact@jihedkdiss.tn", "_self");
+    window.open("mailto:" + "prasadkjose@gmail.com", "_self");
   };
 
   return (
@@ -27,7 +27,7 @@ const Email: React.FC = () => {
           color: 'inherit'
         }}
       >
-        contact@jihedkdiss.tn
+        prasadkjose@gmail.com
       </span>
     </Wrapper>
   );

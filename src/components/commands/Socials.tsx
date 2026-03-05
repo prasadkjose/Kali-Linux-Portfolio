@@ -11,7 +11,7 @@ import { termContext } from "../Terminal";
 import Usage from "../Usage";
 
 const Socials: React.FC = () => {
-  const { arg, history, rerender, executeCommand } = useContext(termContext);
+  const { arg, history, rerender } = useContext(termContext);
 
   /* ===== get current command ===== */
   const currentCommand = getCurrentCmdArry(history);
@@ -62,25 +62,25 @@ const socials = [
   {
     id: 1,
     title: "GitHub",
-    url: "https://github.com/jihedkdiss",
+    url: "https://github.com/prasadkjose",
     tab: 3,
   },
   {
     id: 2,
     title: "Facebook",
-    url: "https://www.facebook.com/jiokdiss",
+    url: "https://www.facebook.com/prasadkjose",
     tab: 1,
   },
   {
     id: 3,
     title: "Linkedin",
-    url: "https://linkedin.com/in/jihedkdiss",
+    url: "https://linkedin.com/in/prasadkjose",
     tab: 1,
   },
   {
     id: 4,
     title: "Blog",
-    url: "https://dev.to/jihedkdiss",
+    url: "https://dev.to/prasadkjose",
     tab: 5,
   },
 ];

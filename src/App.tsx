@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useEffect, useState } from "react";
 import { DefaultTheme, ThemeProvider } from "styled-components";
 import { useTheme } from "./hooks/useTheme";
@@ -30,19 +31,24 @@ function App() {
   // Fullscreen state
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const requestFullscreen = async () => {
-    const el: any = document.documentElement;
+    const el: Element = document.documentElement;
     try {
       if (!document.fullscreenElement && el.requestFullscreen) await el.requestFullscreen();
       else if ((el as any).webkitRequestFullscreen) await (el as any).webkitRequestFullscreen();
       else if ((el as any).msRequestFullscreen) await (el as any).msRequestFullscreen();
-    } catch {}
+    } catch {
+      throw("")
+    }
   };
   const exitFullscreen = async () => {
     try {
       if (document.exitFullscreen) await document.exitFullscreen();
       else if ((document as any).webkitExitFullscreen) await (document as any).webkitExitFullscreen();
       else if ((document as any).msExitFullscreen) await (document as any).msExitFullscreen();
-    } catch {}
+    } catch {
+      throw("")
+
+    }
   };
   const toggleFullscreen = async () => {
     if (!isFullscreen) await requestFullscreen(); else await exitFullscreen();
@@ -231,7 +237,7 @@ function App() {
 
   return (
     <>
-      <h1 className="sr-only" aria-label="Jihed Kdiss">Jihed Kdiss</h1>
+      <h1 className="sr-only" aria-label="Prasad Koshy Jose">Prasad Koshy Jose</h1>
       {themeLoaded && (
         <ThemeProvider theme={selectedTheme}>
           <GlobalStyle />

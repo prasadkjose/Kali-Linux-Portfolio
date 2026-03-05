@@ -217,8 +217,8 @@ const WelcomeBrowserWindow: React.FC<Props> = ({ onClose, onMinimize, isMaximize
             alignItems: 'center'
           }}>
             <img
-              src="/jihedkdiss.jpg"
-              alt="Jihed Kdiss"
+              src="/photo1.jpg"
+              alt="Prasad Koshy Jose"
               style={{
                 width: '120px',
                 height: '120px',
@@ -237,15 +237,15 @@ const WelcomeBrowserWindow: React.FC<Props> = ({ onClose, onMinimize, isMaximize
                 WebkitTextFillColor: 'transparent',
                 fontWeight: 800,
                 letterSpacing: '-0.02em'
-              }}>Jihed Kdiss</h1>
+              }}>Prasad Koshy Jose</h1>
               <p style={{
                 margin: '6px 0 0 0',
                 fontSize: '1.05rem',
                 color: '#D8DEE9',
                 opacity: 0.95
-              }}>Security Researcher • Software Engineer</p>
+              }}>Software Engineer | Security and AI</p>
               <div role="group" aria-label="Quick links" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '12px' }}>
-                <a href="https://github.com/jihedkdiss" target="_blank" rel="noreferrer" style={{
+                <a href="https://github.com/prasadkjose" target="_blank" rel="noreferrer" style={{
                   textDecoration: 'none',
                   color: '#88C0D0',
                   background: 'rgba(136, 192, 208, 0.15)',
@@ -254,16 +254,16 @@ const WelcomeBrowserWindow: React.FC<Props> = ({ onClose, onMinimize, isMaximize
                   border: '1px solid rgba(136,192,208,0.35)',
                   fontSize: '0.92rem'
                 }}>GitHub</a>
-                <a href="https://www.linkedin.com/in/jihedkdiss" target="_blank" rel="noreferrer" style={{
+                <a href="https://www.linkedin.com/in/prasadkjose" target="_blank" rel="noreferrer" style={{
                   textDecoration: 'none', color: '#A3BE8C', background: 'rgba(163, 190, 140, 0.15)', padding: '8px 12px', borderRadius: '999px', border: '1px solid rgba(163,190,140,0.35)', fontSize: '0.92rem'
                 }}>LinkedIn</a>
-                <a href="https://facebook.com/0xjio" target="_blank" rel="noreferrer" style={{
+                <a href="https://facebook.com/prasadkjose" target="_blank" rel="noreferrer" style={{
                   textDecoration: 'none', color: '#81A1C1', background: 'rgba(129, 161, 193, 0.15)', padding: '8px 12px', borderRadius: '999px', border: '1px solid rgba(129,161,193,0.35)', fontSize: '0.92rem'
                 }}>Facebook</a>
-                <a href="https://blog.jihedkdiss.tn/" target="_blank" rel="noreferrer" style={{
+                <a href="https://dev.to/prasadkjose" target="_blank" rel="noreferrer" style={{
                   textDecoration: 'none', color: '#B48EAD', background: 'rgba(180, 142, 173, 0.15)', padding: '8px 12px', borderRadius: '999px', border: '1px solid rgba(180,142,173,0.35)', fontSize: '0.92rem'
                 }}>Blog</a>
-                <a href="/Jihed_Kdiss_Resume.pdf" target="_blank" rel="noreferrer" style={{
+                <a href="/Prasad Resume - SDE.pdf" target="_blank" rel="noreferrer" style={{
                   textDecoration: 'none', color: '#EBCB8B', background: 'rgba(235, 203, 139, 0.15)', padding: '8px 12px', borderRadius: '999px', border: '1px solid rgba(235,203,139,0.35)', fontSize: '0.92rem'
                 }}>Resume</a>
               </div>
@@ -286,7 +286,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({ onClose, onMinimize, isMaximize
                 transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 cursor: 'pointer'
               }}
-              onClick={() => window.open('https://dev.to/jihedkdiss', '_blank')}
+              onClick={() => window.open('https://dev.to/prasadkjose', '_blank')}
               onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 14px 30px rgba(136, 192, 208, 0.18)'; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
             >
@@ -308,7 +308,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({ onClose, onMinimize, isMaximize
                 transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 cursor: 'pointer'
               }}
-              onClick={() => window.open('https://www.linkedin.com/in/jihedkdiss', '_blank')}
+              onClick={() => window.open('https://www.linkedin.com/in/prasadkjose', '_blank')}
               onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 14px 30px rgba(163, 190, 140, 0.18)'; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
             >
