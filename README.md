@@ -1,16 +1,12 @@
-<h1 align="center">Kali Linux Hacker Portfolio 🐦‍🔥</h1>
+<h1 align="center">Linux-like Portfolio Website</h1>
 
-<p align="center">
-    <img src="public/og.png" alt="Kali Linux Terminal Portfolio screenshot" width="600" />
-</p>
 
 <p align="center">
     <img src="https://api.netlify.com/api/v1/badges/9818157c-d810-4ad6-b218-038707143a3c/deploy-status?style=flat-square" alt="Netlify Status" />
-    <img src="https://img.shields.io/github/license/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="License" />
-    <img src="https://img.shields.io/github/repo-size/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Repo size" />
-    <img src="https://img.shields.io/github/languages/top/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Top language" />
-    <img src="https://img.shields.io/github/stars/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square&color=ffcc00" alt="Stars" />
-    <img src="https://img.shields.io/github/forks/jihedkdiss/Kali-Linux-Hacker-Portfolio?style=flat-square" alt="Forks" />
+    <img src="https://img.shields.io/github/license/prasadkjose/Kali-Linux-Portfolio?style=flat-square" alt="License" />
+    <img src="https://img.shields.io/github/repo-size/prasadkjose/Kali-Linux-Portfolio?style=flat-square" alt="Repo size" />
+    <img src="https://img.shields.io/github/languages/top/prasadkjose/Kali-Linux-Portfolio?style=flat-square" alt="Top language" />
+
 </p>
 <p align="center">
     <a href="https://jihedkdiss.tn">
@@ -76,6 +72,7 @@ Contributions are welcome. If you'd like to contribute:
 1. Fork the repo
 2. Create a feature branch
 3. Open a PR describing your change
+
 
 ## Author
 
