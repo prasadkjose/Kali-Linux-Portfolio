@@ -14,7 +14,7 @@
     </a>
 </p>
 <p align="center">
-    <b>A sleek, hacker-inspired portfolio website themed after Kali Linux.<br></b>
+    <b>A sleek, developer portfolio website themed after Kali Linux.<br></b>
     Built with React & TypeScript, simulating Kali Linux desktop environment to showcase projects, resume, and contact info.
 </p>
 
