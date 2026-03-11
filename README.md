@@ -9,8 +9,8 @@
 
 </p>
 <p align="center">
-    <a href="https://jihedkdiss.tn">
-        <img src="https://img.shields.io/badge/View%20Live%20Demo-jihedkdiss.tn-17BB98?style=for-the-badge" alt="Forks" />
+    <a href="https://prasadkjose.com">
+        <img src="https://img.shields.io/badge/View%20Live%20Demo-prasadkjose.com-17BB98?style=for-the-badge" alt="Forks" />
     </a>
 </p>
 <p align="center">
@@ -37,12 +37,9 @@
 - Built-in commands: about, help, projects, resume, socials, email, education, etc.
 - Keyboard-first experience (type commands, open windows, toggle fullscreen)
 
-## Tech stack [![TypeScript](https://img.shields.io/badge/TypeScript-3.9%2B-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-17%2B-%2361DAFB?style=flat-square&logo=react&logoColor=white)](https://reactjs.org/) [![Vite](https://img.shields.io/badge/Vite-%40vitejs-%23646cff?style=flat-square&logo=vite)](https://vitejs.dev/)
+## Tech stack 
+[![TypeScript](https://img.shields.io/badge/TypeScript-3.9%2B-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-17%2B-%2361DAFB?style=flat-square&logo=react&logoColor=white)](https://reactjs.org/) [![Vite](https://img.shields.io/badge/Vite-%40vitejs-%23646cff?style=flat-square&logo=vite)](https://vitejs.dev/)
 
-- TypeScript
-- React + Vite
-- Styled Components (for styling)
-- Netlify (hosting)
 
 ## Run locally
 
@@ -76,6 +73,6 @@ Contributions are welcome. If you'd like to contribute:
 
 ## Author
 
-[![Website](https://img.shields.io/badge/Website-jihedkdiss.tn-17BB98?style=for-the-badge)](https://jihedkdiss.tn)
+[![Website](https://img.shields.io/badge/Website-prasadkjose.com-17BB98?style=for-the-badge)](https://prasadkjose.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/prasadkjose)
 [![X / Twitter](https://img.shields.io/badge/X-%231DA1F2?style=for-the-badge&logo=x&logoColor=white)](https://x.com/prasadkjose)

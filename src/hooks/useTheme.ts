@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import themes from "../components/styles/themes";
 import { DefaultTheme } from "styled-components";
 
-export const useTheme = () => {
+interface UseThemeResult {
+  theme: DefaultTheme;
+  themeLoaded: boolean;
+  setMode: (theme: DefaultTheme) => void;
+}
+
+export const useTheme = (): UseThemeResult => {
   // Kali-only theme
   const [theme, setTheme] = useState<DefaultTheme>(themes.kali);
   const [themeLoaded, setThemeLoaded] = useState(false);
 
-  const setMode = (_mode: DefaultTheme) => {
-    // No-op: theme switching disabled in Kali-only mode
+  const setMode = () => {
+    // Only Kali theme for now
     setTheme(themes.kali);
   };
 

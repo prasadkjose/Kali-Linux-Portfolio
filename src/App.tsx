@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useEffect, useState } from "react";
 import { DefaultTheme, ThemeProvider } from "styled-components";
 import { useTheme } from "./hooks/useTheme";
@@ -8,10 +7,10 @@ import DesktopShortcuts from "./components/DesktopShortcuts";
 import WelcomeBrowserWindow from "./components/WelcomeBrowserWindow";
 import ResumeWindow from "./components/ResumeWindow";
 import FullscreenToggle from "./components/FullscreenToggle";
+import { ThemeSwitcher, ExtendedHTMLElement, ExtendedDocument } from "./types/window";
+import { isMobileDevice } from "./utils/typeGuards"
 
-export const themeContext = createContext<
-  ((switchTheme: DefaultTheme) => void) | null
->(null);
+export const themeContext = createContext<ThemeSwitcher| null>(null);
 
 function App() {
   // themes
@@ -21,21 +20,18 @@ function App() {
   // Device detection
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 768px)');
-    const update = () => setIsMobile(mq.matches);
+    const update = () => setIsMobile(isMobileDevice());
     update();
-    mq.addEventListener?.('change', update);
-    return () => mq.removeEventListener?.('change', update);
   }, []);
 
   // Fullscreen state
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const requestFullscreen = async () => {
-    const el: Element = document.documentElement;
+    const el: HTMLElement = document.documentElement;
     try {
       if (!document.fullscreenElement && el.requestFullscreen) await el.requestFullscreen();
-      else if ((el as any).webkitRequestFullscreen) await (el as any).webkitRequestFullscreen();
-      else if ((el as any).msRequestFullscreen) await (el as any).msRequestFullscreen();
+      else if ((el as ExtendedHTMLElement).webkitRequestFullscreen) await (el as ExtendedHTMLElement).webkitRequestFullscreen();
+      else if ((el as ExtendedHTMLElement).msRequestFullscreen) await (el as ExtendedHTMLElement).msRequestFullscreen();
     } catch {
       throw("")
     }
@@ -43,8 +39,8 @@ function App() {
   const exitFullscreen = async () => {
     try {
       if (document.exitFullscreen) await document.exitFullscreen();
-      else if ((document as any).webkitExitFullscreen) await (document as any).webkitExitFullscreen();
-      else if ((document as any).msExitFullscreen) await (document as any).msExitFullscreen();
+      else if ((document as ExtendedDocument).webkitExitFullscreen) await (document as ExtendedDocument).webkitExitFullscreen();
+      else if ((document as ExtendedDocument).msExitFullscreen) await (document as ExtendedDocument).msExitFullscreen();
     } catch {
       throw("")
 
@@ -54,14 +50,14 @@ function App() {
     if (!isFullscreen) await requestFullscreen(); else await exitFullscreen();
   };
   useEffect(() => {
-    const onChange = () => setIsFullscreen(!!document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).msFullscreenElement);
+    const onChange = () => setIsFullscreen(!!document.fullscreenElement || (document as ExtendedDocument).webkitFullscreenElement || (document as ExtendedDocument).msFullscreenElement);
     document.addEventListener('fullscreenchange', onChange);
-    document.addEventListener('webkitfullscreenchange', onChange as any);
-    document.addEventListener('msfullscreenchange', onChange as any);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    document.addEventListener('msfullscreenchange', onChange);
     return () => {
       document.removeEventListener('fullscreenchange', onChange);
-      document.removeEventListener('webkitfullscreenchange', onChange as any);
-      document.removeEventListener('msfullscreenchange', onChange as any);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+      document.removeEventListener('msfullscreenchange', onChange);
     };
   }, []);
   // Auto-enter fullscreen on load (best-effort; some browsers require gesture)
