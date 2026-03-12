@@ -21,17 +21,17 @@ export interface WindowConfig {
 }
 
 // Extended HTML elemment
-export interface ExtendedHTMLElement extends HTMLElement{
-    webkitRequestFullscreen: () => Promise<void>;
-    msRequestFullscreen: () => Promise<void>;
+export interface ExtendedHTMLElement extends HTMLElement {
+  webkitRequestFullscreen: () => Promise<void>;
+  msRequestFullscreen: () => Promise<void>;
 }
 
 // Extended HTML elemment
-export interface ExtendedDocument extends Document{
-    webkitExitFullscreen: () => Promise<void>;
-    msExitFullscreen: () => Promise<void>;
-    webkitFullscreenElement: React.SetStateAction<boolean>;
-    msFullscreenElement: React.SetStateAction<boolean>;
+export interface ExtendedDocument extends Document {
+  webkitExitFullscreen: () => Promise<void>;
+  msExitFullscreen: () => Promise<void>;
+  webkitFullscreenElement: React.SetStateAction<boolean>;
+  msFullscreenElement: React.SetStateAction<boolean>;
 }
 
 // Fullscreen API types
@@ -67,7 +67,10 @@ export interface WindowManagerActions {
   maximizeWindow: (id: string) => void;
   restoreWindow: (id: string) => void;
   moveWindow: (id: string, x: number, y: number) => void;
-  resizeWindow: (id: string, size: { width: number; height: number; x?: number; y?: number }) => void;
+  resizeWindow: (
+    id: string,
+    size: { width: number; height: number; x?: number; y?: number }
+  ) => void;
   bringToFront: (id: string) => void;
   toggleFullscreen: () => Promise<void>;
 }

@@ -1,3 +1,5 @@
+import { ExtendedHTMLElement } from "../types/window";
+
 export const isFullscreenElement = (el: Element): boolean => {
   return el instanceof Element;
 };
@@ -5,11 +7,11 @@ export const isFullscreenElement = (el: Element): boolean => {
 export const isFullscreenAPIAvailable = (): boolean => {
   return !!(
     document.documentElement.requestFullscreen ||
-    (document.documentElement as any).webkitRequestFullscreen ||
-    (document.documentElement as any).msRequestFullscreen
+    (document.documentElement as ExtendedHTMLElement).webkitRequestFullscreen ||
+    (document.documentElement as ExtendedHTMLElement).msRequestFullscreen
   );
 };
 
 export const isMobileDevice = (): boolean => {
-  return window.matchMedia('(max-width: 768px)').matches;
+  return window.matchMedia("(max-width: 768px)").matches;
 };

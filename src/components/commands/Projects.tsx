@@ -14,7 +14,7 @@ import { termContext } from "../Terminal";
 import Usage from "../Usage";
 
 const Projects: React.FC = () => {
-  const { arg, history, rerender, executeCommand } = useContext(termContext);
+  const { arg, history, rerender } = useContext(termContext);
 
   /* ===== get current command ===== */
   const currentCommand = getCurrentCmdArry(history);
@@ -51,7 +51,7 @@ const Projects: React.FC = () => {
         <ProjectContainer key={id}>
           <ProjectTitle
             onClick={() => handleProjectClick(id, url)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             {`${id}. ${title}`}
           </ProjectTitle>

@@ -22,7 +22,10 @@ const Help: React.FC = () => {
     <HelpWrapper data-testid="help">
       {commands.map(({ cmd, desc, tab }) => (
         <CmdList key={cmd}>
-          <Cmd onClick={() => handleCommandClick(cmd)} style={{ cursor: 'pointer' }}>
+          <Cmd
+            onClick={() => handleCommandClick(cmd)}
+            style={{ cursor: "pointer" }}
+          >
             {cmd}
           </Cmd>
           {generateTabs(tab)}

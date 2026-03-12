@@ -45,7 +45,7 @@ const Socials: React.FC = () => {
         <CmdList key={title}>
           <Cmd
             onClick={() => handleSocialClick(url)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             {`${id}. ${title}`}
           </Cmd>

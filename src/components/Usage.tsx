@@ -25,12 +25,13 @@ const Usage: React.FC<Props> = ({ cmd, marginY = false }) => {
   return (
     <UsageDiv data-testid={`${cmd}-invalid-arg`} marginY={marginY}>
       Usage: {cmd} {action} &#60;{arg[cmd].placeholder}&#62; <br />
-      eg: <span
+      eg:{" "}
+      <span
         onClick={handleExampleClick}
         style={{
-          cursor: 'pointer',
-          textDecoration: 'underline',
-          color: 'inherit'
+          cursor: "pointer",
+          textDecoration: "underline",
+          color: "inherit",
         }}
       >
         {cmd} {action} {arg[cmd].example}
