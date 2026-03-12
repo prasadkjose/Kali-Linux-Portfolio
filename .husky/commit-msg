@@ -8,7 +8,7 @@ commit_msg_file="$1"
 commit_msg=$(cat "$commit_msg_file")
 
 # Check if commit message starts with "Fix:" or "Issue:"
-if ! echo "$commit_msg" | grep -qE '^(Fix|Issue):'; then
+if ! echo "$commit_msg" | grep -qE '^(Fix|Issue|Refactor|Docs):'; then
     echo "Error: Commit message must start with 'Fix:' or 'Issue:'"
     echo "Current message: $commit_msg"
     exit 1
