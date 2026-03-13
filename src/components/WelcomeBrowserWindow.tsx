@@ -1,28 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
-
-// Simple browser-like window that is draggable/resizable and shows a welcome message
-
-type Props = {
-  onClose: () => void;
-  onMinimize?: () => void;
-  isMaximized?: boolean;
-  onToggleMaximize?: () => void;
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-  onMove?: (x: number, y: number) => void;
-  onResize?: (next: {
-    width: number;
-    height: number;
-    x?: number;
-    y?: number;
-  }) => void;
-  visible?: boolean;
-  onFocus?: () => void;
-  zIndex?: number;
-};
+import { WindowState } from "../types/window";
 
 const Frame = styled.div<{
   x?: number;
@@ -32,7 +10,7 @@ const Frame = styled.div<{
   maximized?: boolean;
   hidden?: boolean;
   isTransforming?: boolean;
-  zIndex?: number;
+  z?: number;
 }>`
   position: fixed;
   box-sizing: border-box;
@@ -71,8 +49,7 @@ const Frame = styled.div<{
       width: ${width ?? 900}px;
       height: ${height ?? 560}px;
     `}
-  z-index: ${({ zIndex }) =>
-    zIndex ?? 200}; /* above desktop icons but below modals */
+  z-index: ${({ z }) => z ?? 200}; /* above desktop icons but below modals */
   transition: ${({ isTransforming }) =>
     isTransforming
       ? "left 180ms ease, top 180ms ease, width 180ms ease, height 180ms ease, border-radius 180ms ease"
@@ -244,20 +221,20 @@ const MIN_H = 340;
 const clamp = (v: number, min: number, max: number) =>
   Math.max(min, Math.min(max, v));
 
-const WelcomeBrowserWindow: React.FC<Props> = ({
-  onClose,
-  onMinimize,
-  isMaximized = false,
-  onToggleMaximize,
+const WelcomeBrowserWindow: React.FC<WindowState> = ({
+  close,
+  minimize,
+  maximized = false,
+  toggleMaximize,
   x = 140,
   y = 60,
   width = 900,
   height = 560,
-  onMove,
-  onResize,
+  move,
+  resize,
   visible = true,
-  onFocus,
-  zIndex,
+  bringToFront,
+  z,
 }) => {
   const posRef = useRef({ x, y });
   const sizeRef = useRef({ width, height });
@@ -283,7 +260,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
 
   const onMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (isMaximized) return;
+      if (maximized) return;
       if (dragging.current) {
         const dx = e.clientX - dragStart.current.mx;
         const dy = e.clientY - dragStart.current.my;
@@ -299,7 +276,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
           0,
           Math.max(0, wh - sizeRef.current.height)
         );
-        onMove && onMove(nx, ny);
+        move && move(nx, ny);
       } else if (resizing.current) {
         const { dir, mx, my, sx, sy, sw, sh } = resizing.current;
         let nw = sw,
@@ -324,10 +301,10 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
         const wh = window.innerHeight;
         nx = clamp(nx, 0, Math.max(0, ww - nw));
         ny = clamp(ny, 0, Math.max(0, wh - nh));
-        onResize && onResize({ width: nw, height: nh, x: nx, y: ny });
+        resize && resize(nw, nh, nx, ny);
       }
     },
-    [isMaximized, onMove, onResize]
+    [maximized, move, resize]
   );
 
   const onMouseUp = useCallback(() => {
@@ -340,7 +317,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
   }, [onMouseMove]);
 
   const startDrag = (e: React.MouseEvent) => {
-    if (isMaximized) return;
+    if (maximized) return;
     dragging.current = true;
     setIsTransforming(false);
     dragStart.current = {
@@ -356,7 +333,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
   const startResize =
     (dir: React.ComponentProps<typeof Handle>["pos"]) =>
     (e: React.MouseEvent) => {
-      if (isMaximized) return;
+      if (maximized) return;
       e.stopPropagation();
       resizing.current = {
         dir,
@@ -378,37 +355,37 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
       y={y}
       width={width}
       height={height}
-      maximized={isMaximized}
+      maximized={maximized}
       hidden={!visible}
       isTransforming={!dragging.current && !resizing.current}
-      zIndex={zIndex}
+      z={z}
     >
       <TitleBar
         onMouseDown={e => {
           startDrag(e);
-          onFocus && onFocus();
+          bringToFront && bringToFront();
         }}
       >
         <WindowTitle>Browser</WindowTitle>
         <WindowControls aria-label="Window controls">
-          {onMinimize && (
+          {minimize && (
             <ControlButton
               variant="min"
               title="Minimize"
               aria-label="Minimize"
-              onClick={onMinimize}
+              onClick={minimize}
             >
               <svg viewBox="0 0 10 10" aria-hidden="true">
                 <rect x="1" y="5" width="8" height="1" rx="0.5" />
               </svg>
             </ControlButton>
           )}
-          {onToggleMaximize && (
+          {toggleMaximize && (
             <ControlButton
               variant="max"
               title="Maximize"
               aria-label="Maximize"
-              onClick={onToggleMaximize}
+              onClick={toggleMaximize}
             >
               <svg viewBox="0 0 10 10" aria-hidden="true">
                 <rect
@@ -427,7 +404,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
             variant="close"
             title="Close"
             aria-label="Close"
-            onClick={onClose}
+            onClick={close}
           >
             <svg viewBox="0 0 10 10" aria-hidden="true">
               <path
@@ -441,7 +418,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
         </WindowControls>
       </TitleBar>
 
-      {!isMaximized && (
+      {!maximized && (
         <>
           <Handle pos="n" onMouseDown={startResize("n")} />
           <Handle pos="s" onMouseDown={startResize("s")} />
@@ -458,7 +435,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
         <LocationBar>https://prasadkjose.com</LocationBar>
       </Toolbar>
 
-      <Content maximized={isMaximized}>
+      <Content maximized={maximized}>
         <div
           style={{
             display: "flex",

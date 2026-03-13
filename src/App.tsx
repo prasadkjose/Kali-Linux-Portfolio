@@ -21,45 +21,8 @@ export const themeContext = createContext<ThemeSwitcher | null>(null);
 function App() {
   // themes
   const { theme, themeLoaded, setMode } = useTheme();
-  const {
-    terminal,
-    welcome,
-    resume,
-
-    // Z-index management
-    zBrowser,
-    zTerminal,
-    zResume,
-
-    // Actions
-    bringBrowserToFront,
-    bringTerminalToFront,
-    bringResumeToFront,
-
-    // Window operations
-    openTerminal,
-    closeTerminal,
-    minimizeTerminal,
-    toggleMaximizeTerminal,
-
-    openWelcome,
-    closeWelcome,
-    minimizeWelcome,
-    toggleMaximizeWelcome,
-
-    openResume,
-    closeResume,
-    minimizeResume,
-    toggleMaximizeResume,
-
-    // Window movement and resizing
-    moveTerminal,
-    resizeTerminal,
-    moveWelcome,
-    resizeWelcome,
-    moveResume,
-    resizeResume,
-  }: WindowManager = useWindowManager();
+  const { terminal, welcome, resume, initializeWindows }: WindowManager =
+    useWindowManager();
   const {
     isFullscreen,
     toggleFullscreen,
@@ -84,6 +47,7 @@ function App() {
   // Startup layout: mobile => browser only, maximized; desktop => browser only centered
   useEffect(() => {
     if (!themeLoaded) return;
+    initializeWindows();
   }, [isMobile, themeLoaded]);
 
   // Disable browser's default behavior
@@ -130,9 +94,9 @@ function App() {
           <themeContext.Provider value={themeSwitcher}>
             {/* Desktop Icons - below windows, hidden when any window is maximized */}
             <DesktopShortcuts
-              onOpenTerminal={openTerminal}
-              onOpenWelcome={openWelcome}
-              onOpenResume={openResume}
+              onOpenTerminal={terminal.open}
+              onOpenWelcome={welcome.open}
+              onOpenResume={resume.open}
               hidden={
                 terminal.maximized || welcome.maximized || resume.maximized
               }
@@ -154,61 +118,55 @@ function App() {
             {/* Welcome Browser Window opens on start on desktop only */}
             {welcome.mounted && (
               <WelcomeBrowserWindow
-                onClose={closeWelcome}
+                close={welcome.close}
                 // On mobile: only close button (omit minimize/maximize)
-                onMinimize={!isMobile ? minimizeWelcome : undefined}
-                onToggleMaximize={!isMobile ? toggleMaximizeWelcome : undefined}
-                isMaximized={welcome.maximized}
+                minimize={!isMobile ? welcome.minimize : undefined}
+                toggleMaximize={!isMobile ? welcome.toggleMaximize : undefined}
+                maximized={welcome.maximized}
                 visible={welcome.visible}
+                mounted={welcome.mounted}
                 x={welcome.x}
                 y={welcome.y}
+                z={welcome.z}
                 width={welcome.width}
                 height={welcome.height}
-                onMove={(x, y) => {
-                  moveWelcome(x, y);
-                  bringBrowserToFront();
-                }}
-                onResize={({ width, height, x, y }) => {
-                  resizeWelcome(width, height, x, y);
-                }}
-                onFocus={bringBrowserToFront}
-                zIndex={zBrowser}
+                move={welcome.move}
+                resize={welcome.resize}
+                bringToFront={welcome.bringToFront}
               />
             )}
 
             {/* Terminal Window */}
             {terminal.mounted && (
               <TerminalWindow
-                onClose={closeTerminal}
+                onClose={terminal.close}
                 // On mobile: only close button (omit minimize/maximize)
-                onMinimize={!isMobile ? minimizeTerminal : undefined}
+                onMinimize={!isMobile ? terminal.minimize : undefined}
                 onToggleMaximize={
-                  !isMobile ? toggleMaximizeTerminal : undefined
+                  !isMobile ? terminal.toggleMaximize : undefined
                 }
                 isMaximized={terminal.maximized}
                 visible={terminal.visible}
                 x={terminal.x}
                 y={terminal.y}
+                zIndex={terminal.z}
                 width={terminal.width}
                 height={terminal.height}
-                onMove={(x, y) => {
-                  moveTerminal(x, y);
-                }}
+                onMove={terminal.move}
                 onResize={({ width, height, x, y }) => {
-                  resizeTerminal(width, height, x, y);
+                  terminal.resize(width, height, x, y);
                 }}
-                onFocus={bringTerminalToFront}
-                zIndex={zTerminal}
+                onFocus={terminal.bringToFront}
               />
             )}
 
             {/* Resume Window */}
             {resume.mounted && (
               <ResumeWindow
-                onClose={closeResume}
+                onClose={resume.close}
                 // On mobile: only close button (omit minimize/maximize)
-                onMinimize={!isMobile ? minimizeResume : undefined}
-                onToggleMaximize={!isMobile ? toggleMaximizeResume : undefined}
+                onMinimize={!isMobile ? resume.minimize : undefined}
+                onToggleMaximize={!isMobile ? resume.toggleMaximize : undefined}
                 isMaximized={resume.maximized}
                 visible={resume.visible}
                 x={resume.x}
@@ -216,13 +174,13 @@ function App() {
                 width={resume.width}
                 height={resume.height}
                 onMove={(x, y) => {
-                  moveResume(x, y);
+                  resume.move(x, y);
                 }}
                 onResize={({ width, height, x, y }) => {
-                  resizeResume(width, height, x, y);
+                  resume.resize(width, height, x, y);
                 }}
-                onFocus={bringResumeToFront}
-                zIndex={zResume}
+                onFocus={resume.bringToFront}
+                zIndex={resume.z}
               />
             )}
           </themeContext.Provider>
