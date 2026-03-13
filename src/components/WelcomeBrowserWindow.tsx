@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { WindowState } from "../types/window";
+import Pill from "./Pill";
 
 const Frame = styled.div<{
   x?: number;
@@ -500,86 +501,52 @@ const WelcomeBrowserWindow: React.FC<WindowState> = ({
                   marginTop: "12px",
                 }}
               >
-                <a
+                <Pill
                   href="https://github.com/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="GitHub"
                   style={{
-                    textDecoration: "none",
                     color: "#88C0D0",
                     background: "rgba(136, 192, 208, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(136,192,208,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  GitHub
-                </a>
-                <a
+                ></Pill>
+                <Pill
                   href="https://www.linkedin.com/in/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="LinkedIn"
                   style={{
-                    textDecoration: "none",
                     color: "#A3BE8C",
                     background: "rgba(163, 190, 140, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(163,190,140,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  LinkedIn
-                </a>
-                <a
+                ></Pill>
+                <Pill
                   href="https://facebook.com/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="Facebook"
                   style={{
-                    textDecoration: "none",
                     color: "#81A1C1",
                     background: "rgba(129, 161, 193, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(129,161,193,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  Facebook
-                </a>
-                <a
+                ></Pill>
+
+                <Pill
                   href="https://dev.to/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="Blog"
                   style={{
-                    textDecoration: "none",
                     color: "#B48EAD",
                     background: "rgba(180, 142, 173, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(180,142,173,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  Blog
-                </a>
-                <a
+                ></Pill>
+                <Pill
                   href="/Prasad Resume - SDE.pdf"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="Resume"
                   style={{
-                    textDecoration: "none",
                     color: "#EBCB8B",
                     background: "rgba(235, 203, 139, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(235,203,139,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  Resume
-                </a>
+                ></Pill>
               </div>
             </div>
           </section>
