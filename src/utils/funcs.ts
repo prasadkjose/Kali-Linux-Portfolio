@@ -1,5 +1,4 @@
 import _ from "lodash";
-import theme from "../components/styles/themes";
 
 /**
  * Generates html tabs
@@ -62,14 +61,6 @@ export const checkRedirect = (
  * @param {string[]} themes - the command of the function
  * @returns {boolean} redirect - true | false
  */
-/**
- * Theme switching is disabled in Kali-only mode
- */
-export const checkThemeSwitch = (
-  rerender: boolean,
-  currentCommand: string[],
-  themes: string[]
-): boolean => false;
 
 /**
  * Perform advanced tab actions
@@ -109,14 +100,11 @@ export const argTab = (
 
   // 8) if input is 'projects go '
   else if (_.startsWith(inputVal, "projects go ")) {
-    [
-      "1.Blog",
-      "2.Radio Medenine Website",
-      "3.Deagle",
-      "4.Writeups",
-    ].forEach(t => {
-      hintsCmds = [...hintsCmds, t];
-    });
+    ["1.Blog", "2.Radio Medenine Website", "3.Deagle", "4.Writeups"].forEach(
+      t => {
+        hintsCmds = [...hintsCmds, t];
+      }
+    );
     return hintsCmds;
   }
 };

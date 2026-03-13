@@ -28,8 +28,11 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
   body {
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 500;
-    background-color: ${({ theme }) => theme.backgroundImage ? 'transparent' : theme.colors?.body};
-    ${({ theme }) => theme.backgroundImage && `
+    background-color: ${({ theme }) =>
+      theme.backgroundImage ? "transparent" : theme.colors?.body};
+    ${({ theme }) =>
+      theme.backgroundImage &&
+      `
       background-image: url(${theme.backgroundImage});
       background-size: cover;
       background-position: center;

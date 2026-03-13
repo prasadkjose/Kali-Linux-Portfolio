@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running pre-commit checks..."
+
+# Run ESLint on staged files
+echo "Checking code quality with ESLint..."
+npm run lint
+
+# Check if there are any linting errors
+if [ $? -ne 0 ]; then
+  echo "ESLint found issues. Please fix them before committing."
+  exit 1
+fi
+
+# Run Prettier formatting on staged files
+echo "Formatting code with Prettier..."
+npm run format
+
+# Check if there are any formatting issues
+if [ $? -ne 0 ]; then
+  echo "Prettier formatting failed. Please check your code."
+  exit 1
+fi
+
+# Run lint-staged to ensure everything is properly formatted
+echo "✅ Running final checks with lint-staged..."
+npx lint-staged
+
+if [ $? -ne 0 ]; then
+  echo "❌ Pre-commit checks failed. Please fix the issues above."
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"

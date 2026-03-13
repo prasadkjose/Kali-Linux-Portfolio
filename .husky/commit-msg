@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Validating Commit Message..."
+
+# Get the commit message from the file passed as argument
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+
+# Check if commit message starts with "Fix:" or "Issue:"
+if ! echo "$commit_msg" | grep -qE '^(Fix|Issue|Refactor|Docs):'; then
+    echo "Error: Commit message must start with 'Fix:' or 'Issue:'"
+    echo "Current message: $commit_msg"
+    exit 1
+fi
+
+echo "Commit message validation passed!"
+

@@ -20,9 +20,9 @@ const History: React.FC = () => {
           key={_.uniqueId(`${cmd}_`)}
           onClick={() => handleHistoryClick(cmd)}
           style={{
-            cursor: 'pointer',
-            textDecoration: 'underline',
-            color: 'inherit'
+            cursor: "pointer",
+            textDecoration: "underline",
+            color: "inherit",
           }}
         >
           {cmd}
