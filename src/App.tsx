@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { DefaultTheme, ThemeProvider } from "styled-components";
 import { useTheme } from "./hooks/useTheme";
 import { useWindowManager } from "./hooks/useWindowManager";
+import { useFullscreenManager } from "./hooks/useFullscreenManger";
 import GlobalStyle from "./components/styles/GlobalStyle";
 import TerminalWindow from "./components/TerminalWindow";
 import DesktopShortcuts from "./components/DesktopShortcuts";
@@ -10,8 +11,8 @@ import ResumeWindow from "./components/ResumeWindow";
 import FullscreenToggle from "./components/FullscreenToggle";
 import {
   ThemeSwitcher,
-  ExtendedHTMLElement,
-  ExtendedDocument,
+  FullscreenManager,
+  WindowManager,
 } from "./types/window";
 import { isMobileDevice } from "./utils/typeGuards";
 
@@ -58,9 +59,13 @@ function App() {
     resizeWelcome,
     moveResume,
     resizeResume,
+  }: WindowManager = useWindowManager();
+  const {
+    isFullscreen,
+    toggleFullscreen,
+    requestFullscreen,
+  }: FullscreenManager = useFullscreenManager();
 
-    // Initial setup
-  } = useWindowManager();
   const [selectedTheme, setSelectedTheme] = useState(theme);
 
   // Device detection
@@ -70,53 +75,6 @@ function App() {
     update();
   }, []);
 
-  // Fullscreen state
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const requestFullscreen = async () => {
-    const el: HTMLElement = document.documentElement;
-    try {
-      if (!document.fullscreenElement && el.requestFullscreen)
-        await el.requestFullscreen();
-      else if ((el as ExtendedHTMLElement).webkitRequestFullscreen)
-        await (el as ExtendedHTMLElement).webkitRequestFullscreen();
-      else if ((el as ExtendedHTMLElement).msRequestFullscreen)
-        await (el as ExtendedHTMLElement).msRequestFullscreen();
-    } catch {
-      throw "";
-    }
-  };
-  const exitFullscreen = async () => {
-    try {
-      if (document.exitFullscreen) await document.exitFullscreen();
-      else if ((document as ExtendedDocument).webkitExitFullscreen)
-        await (document as ExtendedDocument).webkitExitFullscreen();
-      else if ((document as ExtendedDocument).msExitFullscreen)
-        await (document as ExtendedDocument).msExitFullscreen();
-    } catch {
-      throw "";
-    }
-  };
-  const toggleFullscreen = async () => {
-    if (!isFullscreen) await requestFullscreen();
-    else await exitFullscreen();
-  };
-  useEffect(() => {
-    const onChange = () =>
-      setIsFullscreen(
-        !!document.fullscreenElement ||
-          (document as ExtendedDocument).webkitFullscreenElement ||
-          (document as ExtendedDocument).msFullscreenElement
-      );
-    document.addEventListener("fullscreenchange", onChange);
-    document.addEventListener("webkitfullscreenchange", onChange);
-    document.addEventListener("msfullscreenchange", onChange);
-    return () => {
-      document.removeEventListener("fullscreenchange", onChange);
-      document.removeEventListener("webkitfullscreenchange", onChange);
-      document.removeEventListener("msfullscreenchange", onChange);
-    };
-  }, []);
-  // Auto-enter fullscreen on load (best-effort; some browsers require gesture)
   useEffect(() => {
     if (themeLoaded) {
       requestFullscreen();
