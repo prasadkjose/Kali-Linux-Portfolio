@@ -455,7 +455,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
       )}
 
       <Toolbar>
-        <LocationBar>https://jihedkdiss.tn</LocationBar>
+        <LocationBar>https://prasadkjose.com</LocationBar>
       </Toolbar>
 
       <Content maximized={isMaximized}>
@@ -511,7 +511,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
                   opacity: 0.95,
                 }}
               >
-                Software Engineer | Security and AI
+                Software Engineer | Security | AI | Open Source
               </p>
               <div
                 role="group"
