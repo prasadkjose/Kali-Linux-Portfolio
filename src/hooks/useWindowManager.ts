@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { isMobileDevice } from "../utils/typeGuards";
-
+import { WindowManager, WindowState } from "../types/window";
 /**
  * Default size configuration for the terminal window
  * @type {{width: number, height: number}}
