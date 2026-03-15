@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { WindowState } from "../types/window";
 import Pill from "./Pill";
+import HighlightCard from "./HighlightCard";
 
 const Frame = styled.div<{
   x?: number;
@@ -222,7 +223,7 @@ const MIN_H = 340;
 const clamp = (v: number, min: number, max: number) =>
   Math.max(min, Math.min(max, v));
 
-const WelcomeBrowserWindow: React.FC<WindowState> = ({
+const ExperienceWindow: React.FC<WindowState> = ({
   close,
   minimize,
   maximized = false,
@@ -560,141 +561,64 @@ const WelcomeBrowserWindow: React.FC<WindowState> = ({
               marginTop: "6px",
             }}
           >
-            <div
+            <HighlightCard
               style={{
                 background:
                   "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
                 border: "1px solid rgba(136, 192, 208, 0.25)",
-                borderRadius: "14px",
-                padding: "18px",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                cursor: "pointer",
               }}
-              onClick={() =>
-                window.open("https://dev.to/prasadkjose", "_blank")
-              }
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(136, 192, 208, 0.18)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                  gap: "10px",
-                }}
-              >
-                <span style={{ fontSize: "1.5rem" }}>🛡️</span>
-                <h3
-                  style={{ margin: 0, color: "#88C0D0", fontSize: "1.05rem" }}
-                >
-                  Security Research
-                </h3>
-              </div>
-              <p style={{ margin: 0, lineHeight: 1.6, color: "#D8DEE9" }}>
-                4+ years reverse engineering & malware analysis. CTF
-                author/instructor at{" "}
-                <strong style={{ color: "#A3BE8C" }}>Securinets</strong>.
-              </p>
-            </div>
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/oracle_logo_icon.png"
+              value="Oracle Corp."
+              description="
+            Built enterprise features using JavaScript/TypeScript, REST APIs & OCI services.
+            Implemented secure data models using Oracle BOSS metadata.
+            Integrated third-party services and cloud APIs in Visual Builder platform"
+            ></HighlightCard>
 
-            <div
+            <HighlightCard
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(163, 190, 140, 0.10) 0%, rgba(191, 97, 106, 0.10) 100%)",
-                border: "1px solid rgba(163, 190, 140, 0.25)",
-                borderRadius: "14px",
-                padding: "18px",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                cursor: "pointer",
+                  "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
+                border: "1px solid rgba(136, 192, 208, 0.25)",
               }}
-              onClick={() =>
-                window.open("https://www.linkedin.com/in/prasadkjose", "_blank")
-              }
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(163, 190, 140, 0.18)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                  gap: "10px",
-                }}
-              >
-                <span style={{ fontSize: "1.5rem" }}>💼</span>
-                <h3
-                  style={{ margin: 0, color: "#A3BE8C", fontSize: "1.05rem" }}
-                >
-                  Professional Experience
-                </h3>
-              </div>
-              <p style={{ margin: 0, lineHeight: 1.6, color: "#D8DEE9" }}>
-                Ex-cybersecurity instructor at{" "}
-                <strong style={{ color: "#EBCB8B" }}>Internews</strong>.
-                SysAdmin at{" "}
-                <strong style={{ color: "#EBCB8B" }}>Radio Mednine</strong>.
-                Teaching at{" "}
-                <strong style={{ color: "#EBCB8B" }}>Blade Club</strong>.
-              </p>
-            </div>
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/emplifi_icon.jpg"
+              value="Emplifi Sro."
+              description="Built social media integrations using JavaScript, ElasticSearch, REST APIs
+            Developed frontend features for multimedia support and platform engagement.
+            Collaborated across teams to deliver scalable customer-facing web features"
+            ></HighlightCard>
 
-            <div
+            <HighlightCard
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(235, 203, 139, 0.10) 0%, rgba(208, 135, 112, 0.10) 100%)",
-                border: "1px solid rgba(235, 203, 139, 0.25)",
-                borderRadius: "14px",
-                padding: "18px",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                cursor: "pointer",
+                  "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
+                border: "1px solid rgba(136, 192, 208, 0.25)",
               }}
-              onClick={() => window.open("https://insat.rnu.tn", "_blank")}
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(235, 203, 139, 0.18)";
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/olympe_icon.jpeg"
+              value="Olympe SA"
+              description="
+            Developed hybrid apps using JavaScript and blockchain frameworks
+            Built modular backend services and REST API integrations
+            Prototyped logistics solutions with distributed ledger technologies"
+            ></HighlightCard>
+
+            <HighlightCard
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
+                border: "1px solid rgba(136, 192, 208, 0.25)",
               }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                  gap: "10px",
-                }}
-              >
-                <span style={{ fontSize: "1.5rem" }}>🏫</span>
-                <h3
-                  style={{ margin: 0, color: "#EBCB8B", fontSize: "1.05rem" }}
-                >
-                  Education
-                </h3>
-              </div>
-              <p style={{ margin: 0, lineHeight: 1.6, color: "#D8DEE9" }}>
-                Software Engineering at{" "}
-                <strong style={{ color: "#D08770" }}>INSAT</strong>:
-                architecture, algorithms, low-level programming.
-              </p>
-            </div>
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/nokia_icon.jpeg"
+              value="Nokia Networks and Solutions"
+              description="
+            Developed SMT fault monitoring tools using Python and Linux
+            Automated factory diagnostics and production issue detection
+            Collaborated with hardware teams on industrial reliability systems"
+            ></HighlightCard>
           </div>
         </div>
 
@@ -709,4 +633,4 @@ const WelcomeBrowserWindow: React.FC<WindowState> = ({
   );
 };
 
-export default WelcomeBrowserWindow;
+export default ExperienceWindow;

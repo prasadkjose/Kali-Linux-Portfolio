@@ -6,7 +6,7 @@ import { useFullscreenManager } from "./hooks/useFullscreenManger";
 import GlobalStyle from "./components/styles/GlobalStyle";
 import TerminalWindow from "./components/TerminalWindow";
 import DesktopShortcuts from "./components/DesktopShortcuts";
-import WelcomeBrowserWindow from "./components/WelcomeBrowserWindow";
+import ExperienceWindow from "./components/ExperienceWindow";
 import ResumeWindow from "./components/ResumeWindow";
 import FullscreenToggle from "./components/FullscreenToggle";
 import {
@@ -117,7 +117,7 @@ function App() {
 
             {/* Welcome Browser Window opens on start on desktop only */}
             {welcome.mounted && (
-              <WelcomeBrowserWindow
+              <ExperienceWindow
                 close={welcome.close}
                 // On mobile: only close button (omit minimize/maximize)
                 minimize={!isMobile ? welcome.minimize : undefined}
