@@ -47,56 +47,27 @@ export const useWindowManager = (): WindowManager => {
     setIsMobile(isMobileDevice());
   });
 
-  // Window states
-  const [terminal, setTerminal] = useState<WindowState>({
-    mounted: false,
-    visible: false,
-    maximized: false,
-    x: 0,
-    y: 0,
-    width: DEFAULT_TERMINAL_SIZE.width,
-    height: DEFAULT_TERMINAL_SIZE.height,
-  });
-
-  const [welcome, setWelcome] = useState<WindowState>({
-    mounted: true,
-    visible: true,
-    maximized: false,
-    x: 140,
-    y: 60,
-    width: DEFAULT_BROWSER_SIZE.width,
-    height: DEFAULT_BROWSER_SIZE.height,
-  });
-
-  const [resume, setResume] = useState<WindowState>({
-    mounted: false,
-    visible: false,
-    maximized: false,
-    x: 160,
-    y: 80,
-    width: DEFAULT_RESUME_SIZE.width,
-    height: DEFAULT_RESUME_SIZE.height,
-  });
-
   // Z-index management
-  const [zTop, setZTop] = useState(500);
-  const [zBrowser, setZBrowser] = useState(200);
-  const [zTerminal, setZTerminal] = useState(300);
-  const [zResume, setZResume] = useState(400);
+  const [, setZTop] = useState(500);
 
   /**
    * Generic function to bring any window to the front of the z-index stack
    * Increments the global zTop counter and sets the window's z-index to that value
    *
-   * @param {React.Dispatch<React.SetStateAction<number>>} zIndexSetter - State setter for the window's z-index
+   * @param {React.Dispatch<React.SetStateAction<WindowState>>} zIndexSetter - State setter for the window's z-index
    */
   const bringToFront = useCallback(
-    (zIndexSetter: React.Dispatch<React.SetStateAction<number>>) => {
-      const next = zTop + 1;
-      setZTop(next);
-      zIndexSetter(next);
+    (zIndexSetter: React.Dispatch<React.SetStateAction<WindowState>>) => {
+      setZTop(prevZTop => {
+        const newZTop = prevZTop + 1;
+        zIndexSetter(prev => ({
+          ...prev,
+          z: newZTop,
+        }));
+        return newZTop;
+      });
     },
-    [zTop]
+    []
   );
 
   /**
@@ -104,7 +75,7 @@ export const useWindowManager = (): WindowManager => {
    * This makes the browser window appear on top of all other windows
    */
   const bringBrowserToFront = useCallback(() => {
-    bringToFront(setZBrowser);
+    bringToFront(setWelcome);
   }, [bringToFront]);
 
   /**
@@ -112,7 +83,7 @@ export const useWindowManager = (): WindowManager => {
    * This makes the terminal window appear on top of all other windows
    */
   const bringTerminalToFront = useCallback(() => {
-    bringToFront(setZTerminal);
+    bringToFront(setTerminal);
   }, [bringToFront]);
 
   /**
@@ -120,7 +91,7 @@ export const useWindowManager = (): WindowManager => {
    * This makes the resume window appear on top of all other windows
    */
   const bringResumeToFront = useCallback(() => {
-    bringToFront(setZResume);
+    bringToFront(setResume);
   }, [bringToFront]);
 
   /**
@@ -202,15 +173,12 @@ export const useWindowManager = (): WindowManager => {
   }, [openWindow, bringTerminalToFront]);
 
   const closeTerminal = useCallback(() => {
-    setTerminal({
+    setTerminal(prev => ({
+      ...prev,
       mounted: false,
       visible: false,
       maximized: false,
-      x: 0,
-      y: 0,
-      width: DEFAULT_TERMINAL_SIZE.width,
-      height: DEFAULT_TERMINAL_SIZE.height,
-    });
+    }));
   }, []);
 
   const minimizeTerminal = useCallback(() => {
@@ -258,15 +226,12 @@ export const useWindowManager = (): WindowManager => {
   }, [openWindow, bringBrowserToFront]);
 
   const closeWelcome = useCallback(() => {
-    setWelcome({
+    setWelcome(prev => ({
+      ...prev,
       mounted: false,
       visible: false,
       maximized: false,
-      x: 140,
-      y: 60,
-      width: DEFAULT_BROWSER_SIZE.width,
-      height: DEFAULT_BROWSER_SIZE.height,
-    });
+    }));
   }, []);
 
   const minimizeWelcome = useCallback(() => {
@@ -314,15 +279,12 @@ export const useWindowManager = (): WindowManager => {
   }, [openWindow, bringResumeToFront]);
 
   const closeResume = useCallback(() => {
-    setResume({
+    setResume(prev => ({
+      ...prev,
       mounted: false,
       visible: false,
       maximized: false,
-      x: 160,
-      y: 80,
-      width: DEFAULT_RESUME_SIZE.width,
-      height: DEFAULT_RESUME_SIZE.height,
-    });
+    }));
   }, []);
 
   const minimizeResume = useCallback(() => {
@@ -363,6 +325,61 @@ export const useWindowManager = (): WindowManager => {
     [bringResumeToFront]
   );
 
+  // Window states
+  const [terminal, setTerminal] = useState<WindowState>({
+    mounted: false,
+    visible: false,
+    maximized: false,
+    x: 0,
+    y: 0,
+    z: 200,
+    width: DEFAULT_TERMINAL_SIZE.width,
+    height: DEFAULT_TERMINAL_SIZE.height,
+    bringToFront: bringTerminalToFront,
+    open: openTerminal,
+    close: closeTerminal,
+    minimize: minimizeTerminal,
+    toggleMaximize: toggleMaximizeTerminal,
+    resize: resizeTerminal,
+    move: moveTerminal,
+  });
+
+  const [welcome, setWelcome] = useState<WindowState>({
+    mounted: true,
+    visible: true,
+    maximized: false,
+    x: 140,
+    y: 60,
+    z: 300,
+    width: DEFAULT_BROWSER_SIZE.width,
+    height: DEFAULT_BROWSER_SIZE.height,
+    bringToFront: bringBrowserToFront,
+    open: openWelcome,
+    close: closeWelcome,
+    minimize: minimizeWelcome,
+    toggleMaximize: toggleMaximizeWelcome,
+    resize: resizeWelcome,
+    move: moveWelcome,
+  });
+
+  const [resume, setResume] = useState<WindowState>({
+    mounted: false,
+    visible: false,
+    maximized: false,
+    x: 160,
+    y: 80,
+    z: 400,
+    width: DEFAULT_RESUME_SIZE.width,
+    height: DEFAULT_RESUME_SIZE.height,
+    bringToFront: bringResumeToFront,
+    open: openResume,
+    close: closeResume,
+    minimize: minimizeResume,
+    toggleMaximize: toggleMaximizeResume,
+    resize: resizeResume,
+    move: moveResume,
+  });
+
   /**
    * Initialize all windows with appropriate states based on device type
    * Sets up the initial window configuration for the application startup
@@ -375,7 +392,8 @@ export const useWindowManager = (): WindowManager => {
       // Mobile: browser only, maximized
       forceMaximizedOnMobile(setWelcome);
 
-      setTerminal({
+      setTerminal(prev => ({
+        ...prev,
         mounted: false,
         visible: false,
         maximized: false,
@@ -383,13 +401,14 @@ export const useWindowManager = (): WindowManager => {
         y: 0,
         width: DEFAULT_TERMINAL_SIZE.width,
         height: DEFAULT_TERMINAL_SIZE.height,
-      });
+      }));
     } else {
       // Desktop: browser centered
       centerWindowOnDesktop(setWelcome, DEFAULT_BROWSER_SIZE);
       bringBrowserToFront();
 
-      setTerminal({
+      setTerminal(prev => ({
+        ...prev,
         mounted: false,
         visible: false,
         maximized: false,
@@ -397,7 +416,7 @@ export const useWindowManager = (): WindowManager => {
         y: 0,
         width: DEFAULT_TERMINAL_SIZE.width,
         height: DEFAULT_TERMINAL_SIZE.height,
-      });
+      }));
     }
   }, [
     isMobile,
@@ -411,43 +430,6 @@ export const useWindowManager = (): WindowManager => {
     terminal,
     welcome,
     resume,
-
-    // Z-index management
-    zTop,
-    zBrowser,
-    zTerminal,
-    zResume,
-
-    // Actions
-    bringBrowserToFront,
-    bringTerminalToFront,
-    bringResumeToFront,
-
-    // Window operations
-    openTerminal,
-    closeTerminal,
-    minimizeTerminal,
-    toggleMaximizeTerminal,
-
-    openWelcome,
-    closeWelcome,
-    minimizeWelcome,
-    toggleMaximizeWelcome,
-
-    openResume,
-    closeResume,
-    minimizeResume,
-    toggleMaximizeResume,
-
-    // Window movement and resizing
-    moveTerminal,
-    resizeTerminal,
-    moveWelcome,
-    resizeWelcome,
-    moveResume,
-    resizeResume,
-
-    // Initial setup
     initializeWindows,
   };
 };

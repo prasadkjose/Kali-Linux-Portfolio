@@ -1,28 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
-
-// Simple browser-like window that is draggable/resizable and shows a welcome message
-
-type Props = {
-  onClose: () => void;
-  onMinimize?: () => void;
-  isMaximized?: boolean;
-  onToggleMaximize?: () => void;
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-  onMove?: (x: number, y: number) => void;
-  onResize?: (next: {
-    width: number;
-    height: number;
-    x?: number;
-    y?: number;
-  }) => void;
-  visible?: boolean;
-  onFocus?: () => void;
-  zIndex?: number;
-};
+import { WindowState } from "../types/window";
+import Pill from "./Pill";
+import HighlightCard from "./HighlightCard";
 
 const Frame = styled.div<{
   x?: number;
@@ -32,7 +12,7 @@ const Frame = styled.div<{
   maximized?: boolean;
   hidden?: boolean;
   isTransforming?: boolean;
-  zIndex?: number;
+  z?: number;
 }>`
   position: fixed;
   box-sizing: border-box;
@@ -71,8 +51,7 @@ const Frame = styled.div<{
       width: ${width ?? 900}px;
       height: ${height ?? 560}px;
     `}
-  z-index: ${({ zIndex }) =>
-    zIndex ?? 200}; /* above desktop icons but below modals */
+  z-index: ${({ z }) => z ?? 200}; /* above desktop icons but below modals */
   transition: ${({ isTransforming }) =>
     isTransforming
       ? "left 180ms ease, top 180ms ease, width 180ms ease, height 180ms ease, border-radius 180ms ease"
@@ -244,20 +223,20 @@ const MIN_H = 340;
 const clamp = (v: number, min: number, max: number) =>
   Math.max(min, Math.min(max, v));
 
-const WelcomeBrowserWindow: React.FC<Props> = ({
-  onClose,
-  onMinimize,
-  isMaximized = false,
-  onToggleMaximize,
+const ExperienceWindow: React.FC<WindowState> = ({
+  close,
+  minimize,
+  maximized = false,
+  toggleMaximize,
   x = 140,
   y = 60,
   width = 900,
   height = 560,
-  onMove,
-  onResize,
+  move,
+  resize,
   visible = true,
-  onFocus,
-  zIndex,
+  bringToFront,
+  z,
 }) => {
   const posRef = useRef({ x, y });
   const sizeRef = useRef({ width, height });
@@ -283,7 +262,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
 
   const onMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (isMaximized) return;
+      if (maximized) return;
       if (dragging.current) {
         const dx = e.clientX - dragStart.current.mx;
         const dy = e.clientY - dragStart.current.my;
@@ -299,7 +278,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
           0,
           Math.max(0, wh - sizeRef.current.height)
         );
-        onMove && onMove(nx, ny);
+        move && move(nx, ny);
       } else if (resizing.current) {
         const { dir, mx, my, sx, sy, sw, sh } = resizing.current;
         let nw = sw,
@@ -324,10 +303,10 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
         const wh = window.innerHeight;
         nx = clamp(nx, 0, Math.max(0, ww - nw));
         ny = clamp(ny, 0, Math.max(0, wh - nh));
-        onResize && onResize({ width: nw, height: nh, x: nx, y: ny });
+        resize && resize(nw, nh, nx, ny);
       }
     },
-    [isMaximized, onMove, onResize]
+    [maximized, move, resize]
   );
 
   const onMouseUp = useCallback(() => {
@@ -340,7 +319,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
   }, [onMouseMove]);
 
   const startDrag = (e: React.MouseEvent) => {
-    if (isMaximized) return;
+    if (maximized) return;
     dragging.current = true;
     setIsTransforming(false);
     dragStart.current = {
@@ -356,7 +335,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
   const startResize =
     (dir: React.ComponentProps<typeof Handle>["pos"]) =>
     (e: React.MouseEvent) => {
-      if (isMaximized) return;
+      if (maximized) return;
       e.stopPropagation();
       resizing.current = {
         dir,
@@ -378,37 +357,37 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
       y={y}
       width={width}
       height={height}
-      maximized={isMaximized}
+      maximized={maximized}
       hidden={!visible}
       isTransforming={!dragging.current && !resizing.current}
-      zIndex={zIndex}
+      z={z}
     >
       <TitleBar
         onMouseDown={e => {
           startDrag(e);
-          onFocus && onFocus();
+          bringToFront && bringToFront();
         }}
       >
         <WindowTitle>Browser</WindowTitle>
         <WindowControls aria-label="Window controls">
-          {onMinimize && (
+          {minimize && (
             <ControlButton
               variant="min"
               title="Minimize"
               aria-label="Minimize"
-              onClick={onMinimize}
+              onClick={minimize}
             >
               <svg viewBox="0 0 10 10" aria-hidden="true">
                 <rect x="1" y="5" width="8" height="1" rx="0.5" />
               </svg>
             </ControlButton>
           )}
-          {onToggleMaximize && (
+          {toggleMaximize && (
             <ControlButton
               variant="max"
               title="Maximize"
               aria-label="Maximize"
-              onClick={onToggleMaximize}
+              onClick={toggleMaximize}
             >
               <svg viewBox="0 0 10 10" aria-hidden="true">
                 <rect
@@ -427,7 +406,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
             variant="close"
             title="Close"
             aria-label="Close"
-            onClick={onClose}
+            onClick={close}
           >
             <svg viewBox="0 0 10 10" aria-hidden="true">
               <path
@@ -441,7 +420,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
         </WindowControls>
       </TitleBar>
 
-      {!isMaximized && (
+      {!maximized && (
         <>
           <Handle pos="n" onMouseDown={startResize("n")} />
           <Handle pos="s" onMouseDown={startResize("s")} />
@@ -458,7 +437,7 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
         <LocationBar>https://prasadkjose.com</LocationBar>
       </Toolbar>
 
-      <Content maximized={isMaximized}>
+      <Content maximized={maximized}>
         <div
           style={{
             display: "flex",
@@ -523,86 +502,52 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
                   marginTop: "12px",
                 }}
               >
-                <a
+                <Pill
                   href="https://github.com/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="GitHub"
                   style={{
-                    textDecoration: "none",
                     color: "#88C0D0",
                     background: "rgba(136, 192, 208, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(136,192,208,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  GitHub
-                </a>
-                <a
+                ></Pill>
+                <Pill
                   href="https://www.linkedin.com/in/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="LinkedIn"
                   style={{
-                    textDecoration: "none",
                     color: "#A3BE8C",
                     background: "rgba(163, 190, 140, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(163,190,140,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  LinkedIn
-                </a>
-                <a
+                ></Pill>
+                <Pill
                   href="https://facebook.com/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="Facebook"
                   style={{
-                    textDecoration: "none",
                     color: "#81A1C1",
                     background: "rgba(129, 161, 193, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(129,161,193,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  Facebook
-                </a>
-                <a
+                ></Pill>
+
+                <Pill
                   href="https://dev.to/prasadkjose"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="Blog"
                   style={{
-                    textDecoration: "none",
                     color: "#B48EAD",
                     background: "rgba(180, 142, 173, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(180,142,173,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  Blog
-                </a>
-                <a
+                ></Pill>
+                <Pill
                   href="/Prasad Resume - SDE.pdf"
-                  target="_blank"
-                  rel="noreferrer"
+                  value="Resume"
                   style={{
-                    textDecoration: "none",
                     color: "#EBCB8B",
                     background: "rgba(235, 203, 139, 0.15)",
-                    padding: "8px 12px",
-                    borderRadius: "999px",
                     border: "1px solid rgba(235,203,139,0.35)",
-                    fontSize: "0.92rem",
                   }}
-                >
-                  Resume
-                </a>
+                ></Pill>
               </div>
             </div>
           </section>
@@ -616,141 +561,64 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
               marginTop: "6px",
             }}
           >
-            <div
+            <HighlightCard
               style={{
                 background:
                   "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
                 border: "1px solid rgba(136, 192, 208, 0.25)",
-                borderRadius: "14px",
-                padding: "18px",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                cursor: "pointer",
               }}
-              onClick={() =>
-                window.open("https://dev.to/prasadkjose", "_blank")
-              }
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(136, 192, 208, 0.18)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                  gap: "10px",
-                }}
-              >
-                <span style={{ fontSize: "1.5rem" }}>🛡️</span>
-                <h3
-                  style={{ margin: 0, color: "#88C0D0", fontSize: "1.05rem" }}
-                >
-                  Security Research
-                </h3>
-              </div>
-              <p style={{ margin: 0, lineHeight: 1.6, color: "#D8DEE9" }}>
-                4+ years reverse engineering & malware analysis. CTF
-                author/instructor at{" "}
-                <strong style={{ color: "#A3BE8C" }}>Securinets</strong>.
-              </p>
-            </div>
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/oracle_logo_icon.png"
+              value="Oracle Corp."
+              description="
+            Built enterprise features using JavaScript/TypeScript, REST APIs & OCI services.
+            Implemented secure data models using Oracle BOSS metadata.
+            Integrated third-party services and cloud APIs in Visual Builder platform"
+            ></HighlightCard>
 
-            <div
+            <HighlightCard
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(163, 190, 140, 0.10) 0%, rgba(191, 97, 106, 0.10) 100%)",
-                border: "1px solid rgba(163, 190, 140, 0.25)",
-                borderRadius: "14px",
-                padding: "18px",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                cursor: "pointer",
+                  "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
+                border: "1px solid rgba(136, 192, 208, 0.25)",
               }}
-              onClick={() =>
-                window.open("https://www.linkedin.com/in/prasadkjose", "_blank")
-              }
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(163, 190, 140, 0.18)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                  gap: "10px",
-                }}
-              >
-                <span style={{ fontSize: "1.5rem" }}>💼</span>
-                <h3
-                  style={{ margin: 0, color: "#A3BE8C", fontSize: "1.05rem" }}
-                >
-                  Professional Experience
-                </h3>
-              </div>
-              <p style={{ margin: 0, lineHeight: 1.6, color: "#D8DEE9" }}>
-                Ex-cybersecurity instructor at{" "}
-                <strong style={{ color: "#EBCB8B" }}>Internews</strong>.
-                SysAdmin at{" "}
-                <strong style={{ color: "#EBCB8B" }}>Radio Mednine</strong>.
-                Teaching at{" "}
-                <strong style={{ color: "#EBCB8B" }}>Blade Club</strong>.
-              </p>
-            </div>
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/emplifi_icon.jpg"
+              value="Emplifi Sro."
+              description="Built social media integrations using JavaScript, ElasticSearch, REST APIs
+            Developed frontend features for multimedia support and platform engagement.
+            Collaborated across teams to deliver scalable customer-facing web features"
+            ></HighlightCard>
 
-            <div
+            <HighlightCard
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(235, 203, 139, 0.10) 0%, rgba(208, 135, 112, 0.10) 100%)",
-                border: "1px solid rgba(235, 203, 139, 0.25)",
-                borderRadius: "14px",
-                padding: "18px",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                cursor: "pointer",
+                  "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
+                border: "1px solid rgba(136, 192, 208, 0.25)",
               }}
-              onClick={() => window.open("https://insat.rnu.tn", "_blank")}
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 30px rgba(235, 203, 139, 0.18)";
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/olympe_icon.jpeg"
+              value="Olympe SA"
+              description="
+            Developed hybrid apps using JavaScript and blockchain frameworks
+            Built modular backend services and REST API integrations
+            Prototyped logistics solutions with distributed ledger technologies"
+            ></HighlightCard>
+
+            <HighlightCard
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(136, 192, 208, 0.10) 0%, rgba(94, 129, 172, 0.10) 100%)",
+                border: "1px solid rgba(136, 192, 208, 0.25)",
               }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                  gap: "10px",
-                }}
-              >
-                <span style={{ fontSize: "1.5rem" }}>🏫</span>
-                <h3
-                  style={{ margin: 0, color: "#EBCB8B", fontSize: "1.05rem" }}
-                >
-                  Education
-                </h3>
-              </div>
-              <p style={{ margin: 0, lineHeight: 1.6, color: "#D8DEE9" }}>
-                Software Engineering at{" "}
-                <strong style={{ color: "#D08770" }}>INSAT</strong>:
-                architecture, algorithms, low-level programming.
-              </p>
-            </div>
+              href="https://www.linkedin.com/in/prasadkjose"
+              icon="/icons/nokia_icon.jpeg"
+              value="Nokia Networks and Solutions"
+              description="
+            Developed SMT fault monitoring tools using Python and Linux
+            Automated factory diagnostics and production issue detection
+            Collaborated with hardware teams on industrial reliability systems"
+            ></HighlightCard>
           </div>
         </div>
 
@@ -765,4 +633,4 @@ const WelcomeBrowserWindow: React.FC<Props> = ({
   );
 };
 
-export default WelcomeBrowserWindow;
+export default ExperienceWindow;

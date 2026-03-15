@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Terminal from "./Terminal";
 
 type Props = {
-  onClose: () => void;
+  onClose?: () => void;
   onMinimize?: () => void;
   onToggleMaximize?: () => void;
   isMaximized?: boolean;

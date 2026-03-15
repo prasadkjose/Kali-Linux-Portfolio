@@ -3,9 +3,9 @@ import styled from "styled-components";
 import DesktopShortcut, { Icons } from "./DesktopShortcut";
 
 type Props = {
-  onOpenTerminal: () => void;
-  onOpenWelcome: () => void;
-  onOpenResume: () => void;
+  onOpenTerminal?: () => void;
+  onOpenWelcome?: () => void;
+  onOpenResume?: () => void;
   hidden?: boolean;
   activeTerminal?: boolean;
   activeBrowser?: boolean;
