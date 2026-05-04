@@ -437,8 +437,6 @@ const EmailWindow: React.FC<WindowState> = () => {
           method="POST"
           noValidate
         >
-          <input type="hidden" name="form-name" value="contact" />
-
           <FormGroup>
             <Label htmlFor="name">Name</Label>
             <Input
