@@ -212,7 +212,7 @@ export const updateVisit = async (
   data: UpdateVisitInput
 ): Promise<SingleResult<Visit>> => {
   return callServerlessFunction<SingleResult<Visit>>(
-    "visits-database-queries",
+    DATABASE_SERVERLESS_METHOD_NAME,
     { id: id.toString() },
     {
       method: "PUT",
