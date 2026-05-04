@@ -9,7 +9,8 @@
 import logger from "../utils/logger";
 import { callServerlessFunction } from "./utils/servicesUtils";
 
-const DATABASE_SERVERLESS_METHOD_NAME = "visits-database-queries";
+const VISITS_TABLE_SERVERLESS_METHOD_NAME = "visits-database-queries";
+const MESSAGES_TABLE_SERVERLESS_METHOD_NAME = "messages-database-queries";
 export interface DatabaseConfig {
   host: string;
   port: number;
@@ -147,7 +148,7 @@ export const getVisits = async (
   offset = 0
 ): Promise<PaginatedResult<Visit>> => {
   return callServerlessFunction<PaginatedResult<Visit>>(
-    DATABASE_SERVERLESS_METHOD_NAME,
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { limit: limit.toString(), offset: offset.toString() },
     { method: "GET" }
   );
@@ -161,7 +162,7 @@ export const getVisitById = async (
   id: number
 ): Promise<SingleResult<Visit>> => {
   return callServerlessFunction<SingleResult<Visit>>(
-    DATABASE_SERVERLESS_METHOD_NAME,
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { id: id.toString() },
     { method: "GET" }
   );
@@ -203,7 +204,7 @@ export const createVisit = async (
   }
 
   return callServerlessFunction<SingleResult<Visit>>(
-    DATABASE_SERVERLESS_METHOD_NAME,
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     {},
     {
       method: "POST",
@@ -222,7 +223,7 @@ export const updateVisit = async (
   data: UpdateVisitInput
 ): Promise<SingleResult<Visit>> => {
   return callServerlessFunction<SingleResult<Visit>>(
-    DATABASE_SERVERLESS_METHOD_NAME,
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { id: id.toString() },
     {
       method: "PUT",
@@ -237,7 +238,7 @@ export const updateVisit = async (
  */
 export const deleteVisit = async (id: number): Promise<SingleResult<Visit>> => {
   return callServerlessFunction<SingleResult<Visit>>(
-    DATABASE_SERVERLESS_METHOD_NAME,
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { id: id.toString() },
     { method: "DELETE" }
   );
@@ -250,7 +251,7 @@ export const createMessage = async (
   data: CreateMessageInput
 ): Promise<SingleResult<Message>> => {
   return callServerlessFunction<SingleResult<Message>>(
-    "messages-database-queries",
+    MESSAGES_TABLE_SERVERLESS_METHOD_NAME,
     {},
     {
       method: "POST",
