@@ -122,6 +122,16 @@ export interface SingleResult<T> {
   message?: string;
 }
 
+export interface Message {
+  id: number;
+  created_at: string;
+  message: Record<string, unknown>;
+}
+
+export interface CreateMessageInput {
+  message?: Record<string, unknown>;
+}
+
 /**
  * Get all visits with pagination
  * @param limit Maximum number of records to return
@@ -232,6 +242,22 @@ export const deleteVisit = async (id: number): Promise<SingleResult<Visit>> => {
     { method: "DELETE" }
   );
 };
+/**
+ * Create new message record
+ * @param data Message creation data
+ */
+export const createMessage = async (
+  data: CreateMessageInput
+): Promise<SingleResult<Message>> => {
+  return callServerlessFunction<SingleResult<Message>>(
+    "messages-database-queries",
+    {},
+    {
+      method: "POST",
+      body: data,
+    }
+  );
+};
 
 export default {
   getDatabaseConfig,
@@ -244,4 +270,5 @@ export default {
   createVisit,
   updateVisit,
   deleteVisit,
+  createMessage,
 };
