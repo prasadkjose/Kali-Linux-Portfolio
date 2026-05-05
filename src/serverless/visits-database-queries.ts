@@ -1,7 +1,7 @@
 /**
  * Database Queries Serverless Function
  *
- * Complete CRUD operations for visits table
+ * Complete CRUD operations for visits and table
  * All database operations run securely on the server, never expose credentials to client
  */
 

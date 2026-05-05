@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { WindowState } from "../../types/window";
 import { PERSONAL_DATA } from "../../config/personalData.config";
 import logger from "../../utils/logger";
+import { createMessage } from "../../services/databaseService";
 
 type EmailFormInputs = {
   name: string;
@@ -332,12 +333,6 @@ const EmailWindow: React.FC<WindowState> = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const encode = (data: Record<string, string>) => {
-    return Object.keys(data)
-      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
-  };
-
   const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -350,40 +345,36 @@ const EmailWindow: React.FC<WindowState> = () => {
     setIsSubmitSuccessful(false);
     setIsSubmitFailed(false);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    /* Post form submission to Netlify */
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "contact", ...formData }),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        logger.info("Email form submitted");
-        setIsSubmitSuccessful(true);
-        setIsSubmitFailed(false);
-
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      })
-      .catch(error => {
-        logger.info(`Email form failed: ${error}`);
-        setIsSubmitSuccessful(false);
-        setIsSubmitFailed(true);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-        setRerender(false);
+    try {
+      // First save message to database
+      await createMessage({
+        message: {
+          type: "contact_form",
+          ...formData,
+          submittedAt: new Date().toISOString(),
+          userAgent: navigator.userAgent,
+        },
       });
+
+      logger.info("Email form submitted and saved to database");
+      setIsSubmitSuccessful(true);
+      setIsSubmitFailed(false);
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      logger.info(`Email form failed: ${error}`);
+      setIsSubmitSuccessful(false);
+      setIsSubmitFailed(true);
+    } finally {
+      setIsSubmitting(false);
+      setRerender(false);
+    }
   };
 
   // Auto-scroll to bottom when form state changes (success message, errors, submit state)
@@ -437,8 +428,6 @@ const EmailWindow: React.FC<WindowState> = () => {
           method="POST"
           noValidate
         >
-          <input type="hidden" name="form-name" value="contact" />
-
           <FormGroup>
             <Label htmlFor="name">Name</Label>
             <Input

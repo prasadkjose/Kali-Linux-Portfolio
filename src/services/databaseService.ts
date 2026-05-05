@@ -9,6 +9,8 @@
 import logger from "../utils/logger";
 import { callServerlessFunction } from "./utils/servicesUtils";
 
+const VISITS_TABLE_SERVERLESS_METHOD_NAME = "visits-database-queries";
+const MESSAGES_TABLE_SERVERLESS_METHOD_NAME = "messages-database-queries";
 export interface DatabaseConfig {
   host: string;
   port: number;
@@ -121,6 +123,16 @@ export interface SingleResult<T> {
   message?: string;
 }
 
+export interface Message {
+  id: number;
+  created_at: string;
+  message: Record<string, unknown>;
+}
+
+export interface CreateMessageInput {
+  message?: Record<string, unknown>;
+}
+
 /**
  * Get all visits with pagination
  * @param limit Maximum number of records to return
@@ -136,7 +148,7 @@ export const getVisits = async (
   offset = 0
 ): Promise<PaginatedResult<Visit>> => {
   return callServerlessFunction<PaginatedResult<Visit>>(
-    "database-queries",
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { limit: limit.toString(), offset: offset.toString() },
     { method: "GET" }
   );
@@ -150,7 +162,7 @@ export const getVisitById = async (
   id: number
 ): Promise<SingleResult<Visit>> => {
   return callServerlessFunction<SingleResult<Visit>>(
-    "database-queries",
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { id: id.toString() },
     { method: "GET" }
   );
@@ -192,7 +204,7 @@ export const createVisit = async (
   }
 
   return callServerlessFunction<SingleResult<Visit>>(
-    "database-queries",
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     {},
     {
       method: "POST",
@@ -211,7 +223,7 @@ export const updateVisit = async (
   data: UpdateVisitInput
 ): Promise<SingleResult<Visit>> => {
   return callServerlessFunction<SingleResult<Visit>>(
-    "database-queries",
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { id: id.toString() },
     {
       method: "PUT",
@@ -226,9 +238,25 @@ export const updateVisit = async (
  */
 export const deleteVisit = async (id: number): Promise<SingleResult<Visit>> => {
   return callServerlessFunction<SingleResult<Visit>>(
-    "database-queries",
+    VISITS_TABLE_SERVERLESS_METHOD_NAME,
     { id: id.toString() },
     { method: "DELETE" }
+  );
+};
+/**
+ * Create new message record
+ * @param data Message creation data
+ */
+export const createMessage = async (
+  data: CreateMessageInput
+): Promise<SingleResult<Message>> => {
+  return callServerlessFunction<SingleResult<Message>>(
+    MESSAGES_TABLE_SERVERLESS_METHOD_NAME,
+    {},
+    {
+      method: "POST",
+      body: data,
+    }
   );
 };
 
@@ -243,4 +271,5 @@ export default {
   createVisit,
   updateVisit,
   deleteVisit,
+  createMessage,
 };
