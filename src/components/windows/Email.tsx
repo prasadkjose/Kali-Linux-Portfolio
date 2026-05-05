@@ -333,12 +333,6 @@ const EmailWindow: React.FC<WindowState> = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const encode = (data: Record<string, string>) => {
-    return Object.keys(data)
-      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
-  };
-
   const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -360,13 +354,6 @@ const EmailWindow: React.FC<WindowState> = () => {
           submittedAt: new Date().toISOString(),
           userAgent: navigator.userAgent,
         },
-      });
-
-      // Also send original Netlify form submission
-      await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({ "form-name": "contact", ...formData }),
       });
 
       logger.info("Email form submitted and saved to database");
