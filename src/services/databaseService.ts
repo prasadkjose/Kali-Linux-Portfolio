@@ -133,7 +133,7 @@ export interface Message {
 }
 
 export interface CreateMessageInput {
-  session_uid: bigint | null;
+  session_uid?: bigint | null;
   message?: Record<string, unknown>;
 }
 
