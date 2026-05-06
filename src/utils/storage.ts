@@ -135,7 +135,7 @@ export const generateSessionUid = (): number => {
 
   // Generate 32 digit numeric UID
   let uidStr = "";
-  for (let i = 0; i < 32; i++) {
+  for (let i = 0; i < 8; i++) {
     uidStr += Math.floor(Math.random() * 10).toString();
   }
 
