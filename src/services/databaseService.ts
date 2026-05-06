@@ -265,6 +265,10 @@ export const deleteVisit = async (id: number): Promise<SingleResult<Visit>> => {
 export const createMessage = async (
   data: CreateMessageInput
 ): Promise<SingleResult<Message>> => {
+  // Generate and persist session UID once per browser session
+  if (!currentSessionUid) {
+    currentSessionUid = generateSessionUid();
+  }
   // eslint-disable-next-line camelcase
   data.session_uid = currentSessionUid;
 
