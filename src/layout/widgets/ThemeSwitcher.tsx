@@ -12,6 +12,7 @@ import logger from "../../utils/logger";
 import { isMobileDevice } from "../../utils/typeGuards";
 
 const FIRST_VISIT = "first_visit";
+
 interface ThemeButtonProps {
   $isActive: boolean;
   $theme: DefaultTheme;

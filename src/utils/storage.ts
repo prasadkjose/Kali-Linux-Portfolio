@@ -117,3 +117,32 @@ export const removeFromSS = (key: string): void => {
     logger.warn(`[storage] Failed to remove session key "${key}":${e}`);
   }
 };
+
+const SESSION_UID_KEY = "session_uid";
+
+/**
+ * Generate unique session UID for visitor tracking
+ * Creates a persistent ID that remains consistent for the user during their session
+ * Uses 8-bit integer format for PostgreSQL int8 storage
+ * @returns 8-bit numeric identifier suitable for int8 column
+ */
+export const generateSessionUid = (): number => {
+  // Check if already exists in session storage
+  const existingUid = getFromSS(SESSION_UID_KEY, null);
+  if (existingUid) {
+    return Number(existingUid);
+  }
+
+  // Generate 8 digit numeric UID
+  let uidStr = "";
+  for (let i = 0; i < 8; i++) {
+    uidStr += Math.floor(Math.random() * 10).toString();
+  }
+
+  const newUid = Number(uidStr);
+
+  // Save to session storage
+  setToSS(SESSION_UID_KEY, newUid.toString());
+
+  return newUid;
+};

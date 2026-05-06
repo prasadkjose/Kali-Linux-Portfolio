@@ -8,6 +8,7 @@
 
 import logger from "../utils/logger";
 import { callServerlessFunction } from "./utils/servicesUtils";
+import { generateSessionUid } from "../utils/storage";
 
 const VISITS_TABLE_SERVERLESS_METHOD_NAME = "visits-database-queries";
 const MESSAGES_TABLE_SERVERLESS_METHOD_NAME = "messages-database-queries";
@@ -98,11 +99,13 @@ export interface Visit {
   visited_at: string;
   path: string;
   visited_from_country?: string;
+  session_uid?: number;
 }
 
 export interface CreateVisitInput {
   path: string;
   visited_from_country?: string;
+  session_uid?: number;
 }
 
 export interface UpdateVisitInput {
@@ -130,6 +133,7 @@ export interface Message {
 }
 
 export interface CreateMessageInput {
+  session_uid?: number | null;
   message?: Record<string, unknown>;
 }
 
@@ -176,9 +180,20 @@ export const getVisitById = async (
  * Create new visit record with client geolocation
  * @param data Visit creation data
  */
+// Session UID stored in memory for current browser session
+let currentSessionUid: number | null = null;
+
 export const createVisit = async (
   data: CreateVisitInput
 ): Promise<SingleResult<Visit>> => {
+  // Generate and persist session UID once per browser session
+  if (!currentSessionUid) {
+    currentSessionUid = generateSessionUid();
+  }
+
+  // Attach session id to visit data
+  // eslint-disable-next-line camelcase
+  data.session_uid = currentSessionUid;
   // Get client geolocation data from browser
   try {
     const geoResponse = await fetch("https://ipapi.co/json/");
@@ -250,12 +265,19 @@ export const deleteVisit = async (id: number): Promise<SingleResult<Visit>> => {
 export const createMessage = async (
   data: CreateMessageInput
 ): Promise<SingleResult<Message>> => {
+  // Generate and persist session UID once per browser session
+  if (!currentSessionUid) {
+    currentSessionUid = generateSessionUid();
+  }
+  // eslint-disable-next-line camelcase
+  data.session_uid = currentSessionUid;
+
   return callServerlessFunction<SingleResult<Message>>(
     MESSAGES_TABLE_SERVERLESS_METHOD_NAME,
     {},
     {
       method: "POST",
-      body: data,
+      body: { ...data },
     }
   );
 };

@@ -22,6 +22,7 @@ interface Message {
 }
 
 interface CreateMessageInput {
+  session_uid?: string;
   message?: Record<string, unknown>;
 }
 
@@ -57,8 +58,8 @@ const databaseQueriesHandler = async (event: NetlifyFunctionEvent) => {
         const body: CreateMessageInput = JSON.parse(event.body || "{}");
 
         const result = await client.query<Message>(
-          `INSERT INTO messages (message) VALUES ($1) RETURNING *`,
-          [body.message || {}]
+          `INSERT INTO messages (id, message) VALUES ($1, $2) RETURNING *`,
+          [body.session_uid || 0, body.message || {}]
         );
 
         await client.end();
