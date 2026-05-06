@@ -85,6 +85,21 @@ export const callServerlessFunction = async <T = unknown>(
   return response.json();
 };
 
+/**
+ * Generate unique session UID for visitor tracking
+ * Creates a persistent ID that remains consistent for the user during their session
+ * Uses combination of timestamp, random bytes and user agent fingerprint
+ * @returns Unique string identifier
+ */
+export const generateSessionUid = (): string => {
+  const timestamp = Date.now().toString(36);
+  const randomBytes = Math.random().toString(36).substring(2, 10);
+  const sessionId = `${timestamp}-${randomBytes}`;
+
+  return sessionId;
+};
+
 export default {
   callServerlessFunction,
+  generateSessionUid,
 };

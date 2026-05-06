@@ -7,7 +7,10 @@
  */
 
 import logger from "../utils/logger";
-import { callServerlessFunction } from "./utils/servicesUtils";
+import {
+  callServerlessFunction,
+  generateSessionUid,
+} from "./utils/servicesUtils";
 
 const VISITS_TABLE_SERVERLESS_METHOD_NAME = "visits-database-queries";
 const MESSAGES_TABLE_SERVERLESS_METHOD_NAME = "messages-database-queries";
@@ -98,11 +101,13 @@ export interface Visit {
   visited_at: string;
   path: string;
   visited_from_country?: string;
+  session_uid?: string;
 }
 
 export interface CreateVisitInput {
   path: string;
   visited_from_country?: string;
+  session_uid?: string;
 }
 
 export interface UpdateVisitInput {
@@ -176,9 +181,20 @@ export const getVisitById = async (
  * Create new visit record with client geolocation
  * @param data Visit creation data
  */
+// Session UID stored in memory for current browser session
+let currentSessionUid: string | null = null;
+
 export const createVisit = async (
   data: CreateVisitInput
 ): Promise<SingleResult<Visit>> => {
+  // Generate and persist session UID once per browser session
+  if (!currentSessionUid) {
+    currentSessionUid = generateSessionUid();
+  }
+
+  // Attach session id to visit data
+  // eslint-disable-next-line camelcase
+  data.session_uid = currentSessionUid;
   // Get client geolocation data from browser
   try {
     const geoResponse = await fetch("https://ipapi.co/json/");
