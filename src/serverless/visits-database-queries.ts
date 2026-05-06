@@ -21,13 +21,13 @@ interface Visit {
   visited_at: string;
   path: string;
   visited_from_country?: string;
-  session_uid?: string;
+  session_uid?: bigint;
 }
 
 interface CreateVisitInput {
   path: string;
   visited_from_country?: string;
-  session_uid?: string;
+  session_uid?: bigint;
 }
 
 interface UpdateVisitInput {
@@ -72,11 +72,7 @@ const databaseQueriesHandler = async (event: NetlifyFunctionEvent) => {
 
         const result = await client.query<CreateVisitInput>(
           `INSERT INTO visits (path, visited_from_country, id) VALUES ($1, $2, $3) RETURNING *`,
-          [
-            body.path,
-            body.visited_from_country || null,
-            body.session_uid || null,
-          ]
+          [body.path, body.visited_from_country || null, body.session_uid || 0]
         );
 
         await client.end();

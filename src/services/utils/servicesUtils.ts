@@ -88,15 +88,16 @@ export const callServerlessFunction = async <T = unknown>(
 /**
  * Generate unique session UID for visitor tracking
  * Creates a persistent ID that remains consistent for the user during their session
- * Uses combination of timestamp, random bytes and user agent fingerprint
- * @returns Unique string identifier
+ * Uses 64-bit integer format for PostgreSQL int8 storage
+ * @returns 64-bit numeric identifier suitable for int8 column
  */
-export const generateSessionUid = (): string => {
-  const timestamp = Date.now().toString(36);
-  const randomBytes = Math.random().toString(36).substring(2, 10);
-  const sessionId = `${timestamp}-${randomBytes}`;
-
-  return sessionId;
+export const generateSessionUid = (): bigint => {
+  // 41 bits timestamp (milliseconds since epoch, good for ~69 years)
+  const timestamp = BigInt(Date.now()) & 0x1ffffffffffn;
+  // 23 bits random entropy
+  const random = BigInt(Math.floor(Math.random() * 0x7fffff));
+  // Combine into 64-bit integer (fits exactly into PostgreSQL int8)
+  return (timestamp << 23n) | random;
 };
 
 export default {

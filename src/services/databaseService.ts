@@ -101,13 +101,13 @@ export interface Visit {
   visited_at: string;
   path: string;
   visited_from_country?: string;
-  session_uid?: string;
+  session_uid?: bigint;
 }
 
 export interface CreateVisitInput {
   path: string;
   visited_from_country?: string;
-  session_uid?: string;
+  session_uid?: bigint;
 }
 
 export interface UpdateVisitInput {
@@ -182,7 +182,7 @@ export const getVisitById = async (
  * @param data Visit creation data
  */
 // Session UID stored in memory for current browser session
-let currentSessionUid: string | null = null;
+let currentSessionUid: bigint | null = null;
 
 export const createVisit = async (
   data: CreateVisitInput
