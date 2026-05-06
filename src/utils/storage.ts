@@ -123,8 +123,8 @@ const SESSION_UID_KEY = "session_uid";
 /**
  * Generate unique session UID for visitor tracking
  * Creates a persistent ID that remains consistent for the user during their session
- * Uses 64-bit integer format for PostgreSQL int8 storage
- * @returns 64-bit numeric identifier suitable for int8 column
+ * Uses 8-bit integer format for PostgreSQL int8 storage
+ * @returns 8-bit numeric identifier suitable for int8 column
  */
 export const generateSessionUid = (): number => {
   // Check if already exists in session storage
@@ -133,7 +133,7 @@ export const generateSessionUid = (): number => {
     return Number(existingUid);
   }
 
-  // Generate 32 digit numeric UID
+  // Generate 8 digit numeric UID
   let uidStr = "";
   for (let i = 0; i < 8; i++) {
     uidStr += Math.floor(Math.random() * 10).toString();
