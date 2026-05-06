@@ -133,12 +133,13 @@ export const generateSessionUid = (): bigint => {
     return BigInt(existingUid);
   }
 
-  // 41 bits timestamp (milliseconds since epoch, good for ~69 years)
-  const timestamp = BigInt(Date.now()) & 0x1ffffffffffn;
-  // 23 bits random entropy
-  const random = BigInt(Math.floor(Math.random() * 0x7fffff));
-  // Combine into 64-bit integer (fits exactly into PostgreSQL int8)
-  const newUid = (timestamp << 23n) | random;
+  // Generate 32 digit numeric UID
+  let uidStr = "";
+  for (let i = 0; i < 32; i++) {
+    uidStr += Math.floor(Math.random() * 10).toString();
+  }
+
+  const newUid = BigInt(uidStr);
 
   // Save to session storage
   setToSS(SESSION_UID_KEY, newUid.toString());
