@@ -31,6 +31,13 @@ export const callServerlessFunction = async <T = unknown>(
 ): Promise<T> => {
   // Call directly in local development environment
   logger.info(`Calling serverless endpoint: ${endpoint}`);
+
+  logger.info(`Serializing Request body using replacer functions`);
+  const data = JSON.stringify(options.body, (key, value) =>
+    typeof value === "bigint" ? value.toString() : value
+  );
+  logger.info(`Serialized data: ${data}`);
+
   if (import.meta.env.DEV) {
     const handlerPath = `../../serverless/${endpoint}`;
     const { handler } = await import(handlerPath);
@@ -40,7 +47,7 @@ export const callServerlessFunction = async <T = unknown>(
       queryStringParameters: params,
       httpMethod: options.method || "GET",
       headers: options.headers || {},
-      body: options.body ? JSON.stringify(options.body) : null,
+      body: options.body ? data : null,
     };
 
     const response = (await handler(event)) as {
@@ -68,7 +75,7 @@ export const callServerlessFunction = async <T = unknown>(
       "Content-Type": "application/json",
       ...options.headers,
     },
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body: options.body ? data : undefined,
   });
 
   if (!response.ok) {
