@@ -8,7 +8,7 @@
 
 import logger from "../utils/logger";
 import { callServerlessFunction } from "./utils/servicesUtils";
-import { generateSessionUid } from "../layout/widgets/ThemeSwitcher";
+import { generateSessionUid } from "../utils/storage";
 
 const VISITS_TABLE_SERVERLESS_METHOD_NAME = "visits-database-queries";
 const MESSAGES_TABLE_SERVERLESS_METHOD_NAME = "messages-database-queries";
