@@ -12,10 +12,38 @@ import logger from "../../utils/logger";
 import { isMobileDevice } from "../../utils/typeGuards";
 
 const FIRST_VISIT = "first_visit";
+const SESSION_UID_KEY = "session_uid";
+
 interface ThemeButtonProps {
   $isActive: boolean;
   $theme: DefaultTheme;
 }
+
+/**
+ * Generate unique session UID for visitor tracking
+ * Creates a persistent ID that remains consistent for the user during their session
+ * Uses 64-bit integer format for PostgreSQL int8 storage
+ * @returns 64-bit numeric identifier suitable for int8 column
+ */
+export const generateSessionUid = (): bigint => {
+  // Check if already exists in session storage
+  const existingUid = getFromSS(SESSION_UID_KEY, null);
+  if (existingUid) {
+    return BigInt(existingUid);
+  }
+
+  // 41 bits timestamp (milliseconds since epoch, good for ~69 years)
+  const timestamp = BigInt(Date.now()) & 0x1ffffffffffn;
+  // 23 bits random entropy
+  const random = BigInt(Math.floor(Math.random() * 0x7fffff));
+  // Combine into 64-bit integer (fits exactly into PostgreSQL int8)
+  const newUid = (timestamp << 23n) | random;
+
+  // Save to session storage
+  setToSS(SESSION_UID_KEY, newUid.toString());
+
+  return newUid;
+};
 
 const Container = styled.div<{ $themeLoaded: boolean; $theme: DefaultTheme }>`
   position: absolute;
