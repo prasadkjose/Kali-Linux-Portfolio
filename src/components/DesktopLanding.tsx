@@ -1,7 +1,6 @@
 import { ThemeProvider } from "styled-components";
 import { PERSONAL_DATA } from "../config/personalData.config";
 import { themeContext } from "../hooks/useTheme";
-import GlobalStyle from "../styles/GlobalStyle";
 import theme from "../styles/themes";
 import DesktopShortcuts from "./desktop-shortcuts/DesktopShortcuts";
 import Taskbar from "../layout/taskbar/Taskbar";
@@ -72,7 +71,6 @@ const DesktopLanding: React.FC<ThemeSwitcherProps> = ({
 
   return (
     <ThemeProvider theme={currentTheme}>
-      <GlobalStyle theme={currentTheme} />
       <h1 className="sr-only" aria-label={PERSONAL_DATA.personalInfo.name}>
         {PERSONAL_DATA.personalInfo.name}
       </h1>

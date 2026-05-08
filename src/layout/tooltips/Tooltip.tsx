@@ -46,7 +46,6 @@ const TooltipBubble = styled.div<{ $position: string; $offsetY?: number }>`
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transform: rotate(45deg);
   }
-
   ${({ $position, $offsetY = 0 }) => {
     switch ($position) {
       case "top-left":
@@ -152,7 +151,6 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   return (
     <TooltipBubble
-      className="glow-border"
       $position={tooltipConfig.position}
       $offsetY={offsetY}
       onClick={e => e.stopPropagation()}
