@@ -47,38 +47,6 @@ const TooltipBubble = styled.div<{ $position: string; $offsetY?: number }>`
     transform: rotate(45deg);
   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: 8px;
-    padding: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      #ff6b6b 25%,
-      transparent 50%
-    );
-    background-size: 200% 100%;
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: borderRun 5.5s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  @keyframes borderRun {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-
   ${({ $position, $offsetY = 0 }) => {
     switch ($position) {
       case "top-left":
@@ -184,6 +152,7 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   return (
     <TooltipBubble
+      className="glow-border"
       $position={tooltipConfig.position}
       $offsetY={offsetY}
       onClick={e => e.stopPropagation()}
