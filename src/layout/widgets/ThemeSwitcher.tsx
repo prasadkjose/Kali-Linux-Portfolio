@@ -224,6 +224,8 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   };
 
   return (
+    // TODO: fix this logic
+
     <Container
       className={showTooltip ? "glow-border" : ""}
       $themeLoaded={$themeLoaded}
