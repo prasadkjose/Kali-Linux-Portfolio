@@ -46,7 +46,6 @@ const TooltipBubble = styled.div<{ $position: string; $offsetY?: number }>`
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transform: rotate(45deg);
   }
-
   ${({ $position, $offsetY = 0 }) => {
     switch ($position) {
       case "top-left":
@@ -95,7 +94,7 @@ const TooltipBubble = styled.div<{ $position: string; $offsetY?: number }>`
           }
         `;
     }
-  }}
+  }}// Border glower
 `;
 
 export interface TooltipProps {

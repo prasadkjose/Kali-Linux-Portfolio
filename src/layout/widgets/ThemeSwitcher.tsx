@@ -34,35 +34,7 @@ const Container = styled.div<{ $themeLoaded: boolean; $theme: DefaultTheme }>`
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   width: auto;
-
-  // Skip the glow if the OS is selected
-  ${props =>
-    !props.$themeLoaded &&
-    `&::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: 8px;
-    padding: 2px;
-    background: linear-gradient(90deg, transparent 0%, ${props.$theme.colors.text[100]} 25%, transparent 50%);
-    background-size: 200% 100%;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    animation: borderRun 5.5s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  @keyframes borderRun {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-`}
+}
 
   // isMobile
   ${props =>
@@ -253,7 +225,13 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   };
 
   return (
-    <Container $themeLoaded={$themeLoaded} $theme={currentTheme}>
+    // TODO: fix this logic
+
+    <Container
+      className={showTooltip ? "glow-border" : ""}
+      $themeLoaded={$themeLoaded}
+      $theme={currentTheme}
+    >
       {themesList.map(({ key, label, theme }) => (
         <ThemeButton
           key={key}

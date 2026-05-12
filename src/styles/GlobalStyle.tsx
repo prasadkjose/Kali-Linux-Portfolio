@@ -94,6 +94,37 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
     height: 1px;
     overflow: hidden;
   }
+
+   /* Glowing Border Highlight Class - matches tooltip bubble effect */
+
+   @keyframes borderRun {
+     0% {
+       background-position: 0% 0;
+     }
+     100% {
+       background-position: 200% 0;
+     }
+   }
+
+   .glow-border::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(90deg, transparent 0%, ${({ theme }) => theme.colors?.text["300"] || "#FFFFFF"} 25%, transparent 50%);
+    background-size: 200% 100%;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: borderRun 3.2s linear infinite;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: background-position;
+  }
+
 `;
 
 export default GlobalStyle;

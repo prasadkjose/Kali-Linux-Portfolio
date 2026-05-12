@@ -12,12 +12,12 @@ const theme: Themes = {
       body: "#0C0C0C",
       scrollHandle: "#2E3440",
       scrollHandleHover: "#434C5E",
-      primary: "#00D4FF",
+      primary: "rgba(59, 246, 137, 0.9)",
       secondary: "#FF6B6B",
       text: {
         100: "rgba(59, 246, 137, 0.9)",
         200: "#D8DEE9",
-        300: "#99ddcc",
+        300: "rgba(59, 246, 137, 0.9)",
       },
     },
   },
@@ -30,7 +30,7 @@ const theme: Themes = {
       body: "#77216e67;",
       scrollHandle: "#c2c2c2fd",
       scrollHandleHover: "#434C5E",
-      primary: "#611e5aff;",
+      primary: "#611e5aff",
       secondary: "#FF6B6B",
       text: {
         100: "#ECEFF4",

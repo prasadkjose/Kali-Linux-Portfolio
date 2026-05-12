@@ -8,6 +8,7 @@ import { ThemeSwitcherProps } from "./types/window";
 import { preloadResources } from "./utils/resource-utils";
 import ShapeGrid from "./components/Antigravity";
 import LoadingStatusBar from "./components/LoadingStatusBar";
+import GlobalStyle from "./styles/GlobalStyle";
 
 function App() {
   // themes
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <>
+      <GlobalStyle theme={theme} />
       {/* Theme Switcher - 3-way toggle for Linux, Fedora, Kali themes */}
       <ThemeSwitcher {...themeProps} />
       {!themeLoaded ? (

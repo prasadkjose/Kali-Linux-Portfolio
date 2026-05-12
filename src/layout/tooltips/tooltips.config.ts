@@ -15,6 +15,7 @@ export const TOOLTIP_IDS = {
 
 export type TooltipId = (typeof TOOLTIP_IDS)[keyof typeof TOOLTIP_IDS];
 
+// When adding a tooltip, make sure to add the class "glow-border" to the pointing element.
 export const TOOLTIPS_CONFIG: TooltipConfigItem[] = [
   {
     id: TOOLTIP_IDS.FULLSCREEN_HINT,
