@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { motion, useMotionValue } from "motion/react";
 import styled from "styled-components";
 import { getFromLS, setToLS } from "../utils/storage";
+import { isMobileDevice } from "../utils/typeGuards";
 import {
   getComponentId,
   DRAGGABLE_STORAGE_KEY,
@@ -39,6 +40,9 @@ const Draggable: React.FC<DraggableProps> = ({
   const componentId = getComponentId(children);
   const STORAGE_KEY = DRAGGABLE_STORAGE_KEY;
   const [zIndex, setZIndex] = useState(10);
+  const [isMobile] = useState(isMobileDevice());
+  const [canDrag, setCanDrag] = useState(true);
+  const LONG_PRESS_DELAY = 500; // 500ms long press required on mobile
 
   const containerRef = React.useRef<HTMLDivElement>(null);
   // Initialize motion values with null - will be set before first paint
@@ -66,10 +70,25 @@ const Draggable: React.FC<DraggableProps> = ({
     }
   }, [componentId, x, y, initialX, initialY]);
 
+  // Handle touch events for mobile long press
+  const handleTouchStart = () => {
+    if (!isMobile) return;
+    setCanDrag(false);
+
+    window.setTimeout(() => {
+      setCanDrag(true);
+      bringToFront();
+    }, LONG_PRESS_DELAY);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobile) return;
+    // Reset drag capability after touch ends
+    setCanDrag(false);
+  };
+
   const bringToFront = () => {
     setZIndex(100);
-    // Reset z-index after short delay if another element is clicked
-    setTimeout(() => setZIndex(10), 300);
   };
 
   // Calculate dynamic drag constraints based on actual component size
@@ -102,7 +121,7 @@ const Draggable: React.FC<DraggableProps> = ({
   return (
     <DraggableContainer
       ref={containerRef}
-      drag
+      drag={canDrag}
       dragMomentum={false}
       dragElastic={0}
       style={(() => {
@@ -113,11 +132,14 @@ const Draggable: React.FC<DraggableProps> = ({
           ...baseStyles,
           x,
           y,
+          touchAction: isMobile ? "manipulation" : "none",
         };
       })()}
       onMouseDown={bringToFront}
       onDragEnd={handleDragEnd}
       dragConstraints={getDragConstraints()}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {children}
     </DraggableContainer>
